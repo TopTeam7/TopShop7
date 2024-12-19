@@ -18,32 +18,44 @@ public class OrderRepository {
         this.orderCountId = 0;
     }
 
+    /** Метод принимает параметр
+      * @param order
+     * Метод добавляет новы заказ в лист заказов и присвавает Id номер
+     * @return Order
+     */
     public Order saveOrder(Order order) {
         order.setOrderId((++orderCountId));
         orders.add(order);
         return order;
     }
 
+    /**Метод не принимает параметров
+     * Метод возврфщает лист заказов
+     * @return List<Order>
+     */
     public List<Order> listOrder() {
         return orders;
     }
 
-    public void changeStatusOrder() {
+    /**Метод принимает параметры
+      * @param orderId типа int
+     * @param newStatus типа String
+     * Метод достает заказ из листа по Id номеру меняет его статус
+     */
+    public void changeStatusOrder(int orderId, String newStatus) {
         try {
-            System.out.println("Enter order Id");
-            int orderId = scanner.nextInt();
-
-            System.out.println("Enter new status of the order");
-            String newStatus = sc.nextLine();
-
             orders.get(orderId - 1).setOrderStatus(newStatus);
-            System.out.println("Статус заказа " + orders.get(orderId - 1) + "  изменён");
-
         } catch (IndexOutOfBoundsException e) {
             throw new OrderNotFoundExcetion("Заказа с таким номером не существует");
         }
     }
 
+    /**
+     * Метод принимает параметр
+      * @param id типа int
+     *  Метод возвращает заказ по номеру Id
+     * @return Order
+     */
     public Order getOrderById(int id) {
         try {
             return orders.get(id - 1);

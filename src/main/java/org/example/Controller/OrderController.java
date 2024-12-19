@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public class OrderController {
     Scanner sc = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+    int orderId;
 
     private final OrderService orderService;
     private boolean cycleOrderProgram = true;
@@ -42,13 +44,13 @@ public class OrderController {
     }
 
     public void addOrder() {
-        System.out.println("Enter the buyer ID");
+        System.out.println("Введите ID покупателя");
         int buyerId = sc.nextInt();
 
-        System.out.println("Enter product ID");
+        System.out.println("Введите ID продукта");
         int productId = sc.nextInt();
 
-        System.out.println("Enter status of the order '\n1-new ,'\n2- process, '\n3- completed, '\n4- canceled");
+        System.out.println("Введите статус заказа '\n1-new,'\n2- process, '\n3- completed, '\n4- canceled");
         int orderStatusValue = sc.nextInt();
 
         String orderStatus;
@@ -64,21 +66,46 @@ public class OrderController {
         System.out.println(orderView);
     }
 
+    /**Метод не принимает параметры
+     * метод выводит список заказов к консоль
+     *
+     */
     public void showOrders() {
-        String view = orderService.listToView().toString();
-        System.out.println(view);
+        if(orderService.listToView().isEmpty()){
+            System.out.println("Список заказов пуст");
+        }else {
+            String view = orderService.listToView().toString();
+            System.out.println(view);
+        }
     }
 
+    /**Метод не принимает параметры
+     * Метод позволяет ввести  новый статус заказа
+     *
+      */
     public void changeStatusOrder() {
-        orderService.changeStatusOrder();
+
+        System.out.println("Введите новый статус заказа");
+        String newStatus = scanner.nextLine();
+        orderService.changeStatusOrder(getOrderById(), newStatus);
+        System.out.println("Статус заказа изменен");
     }
 
-    public void getOrderById() {
+    /**Метод выводить в консоль заказ по указанному Id
+     * Метод не принимает.
+     * Метод возвращает объект типа Order
+     * @return Order
+     */
+    public int getOrderById() {
         System.out.println("Введите Id номер заказа");
         int id = sc.nextInt();
         System.out.println(orderService.getOrderById(id));
+        return orderService.getOrderById(id).getOrderId();
     }
 
+    /**Метод не принимает
+     * Метод возвращет в главное меню
+      */
     public void back() {
         cycleOrderProgram = false;
     }

@@ -5,7 +5,7 @@ import org.example.OrderException.OrderNotFoundExcetion;
 import java.util.Scanner;
 
 public class MainController {
-    private boolean cycleProgram =true;
+    private boolean cycleProgram = true;
     private final OrderController orderController;
     Scanner scanner = new Scanner(System.in);
 
@@ -13,6 +13,10 @@ public class MainController {
         this.orderController = orderController;
     }
 
+    /**Метод нe принимает параметры
+     * Метод запускает главное меню программы
+     *
+      */
     public void start() {
         while (cycleProgram) {
             System.out.println("Для управления покупателями нажмите цифру 1");
@@ -26,7 +30,7 @@ public class MainController {
                     // здесь добавить вызов методов для покупателя и продукта
 
                     case 3 -> startOrder();
-                    default ->closeController();
+                    default -> closeController();
                 }
             } catch (OrderNotFoundExcetion e) {
                 System.out.println(e);
@@ -34,11 +38,20 @@ public class MainController {
         }
     }
 
+    /**
+     * Метод не принимает параметры
+     * Метод переходит в меню Заказ
+     */
     public void startOrder() {
 
         orderController.startOrder(cycleProgram);
     }
-   public void closeController(){
-        cycleProgram=false;
+
+    /**
+     * Метод не принимает
+     * Метод зпрекращает работу программы
+     */
+    public void closeController() {
+        cycleProgram = false;
     }
 }
