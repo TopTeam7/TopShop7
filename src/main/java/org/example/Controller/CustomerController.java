@@ -67,10 +67,8 @@ public class CustomerController {
         try {
             Customer customer = service.findCustomerById(id);
             System.out.println("Найден покупатель: " + customer);
-        } catch (org.example.Service.CustomerNotFoundException e) {
-            System.out.println(e.getMessage());
         } catch (CustomerNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 }

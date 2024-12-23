@@ -24,8 +24,8 @@ public class CustomerService {
      * @param type тип покупателя.
      */
     public void addCustomer(String name, CustomerType type) {
+        int newId = repository.generateNewId(); // Генерируем новый ID
         List<Customer> customers = repository.loadCustomers();
-        int newId = customers.isEmpty() ? 1 : customers.get(customers.size() - 1).getId() + 1;
         customers.add(new Customer(newId, name, type));
         repository.saveCustomers(customers);
     }
@@ -46,7 +46,7 @@ public class CustomerService {
      * @return покупатель.
      * @throws CustomerNotFoundException если покупатель не найден.
      */
-    public Customer findCustomerById(int id) throws org.example.Service.CustomerNotFoundException, CustomerNotFoundException {
+    public Customer findCustomerById(int id) throws CustomerNotFoundException {
         return repository.loadCustomers().stream()
                 .filter(customer -> customer.getId() == id)
                 .findFirst()

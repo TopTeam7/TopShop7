@@ -9,7 +9,7 @@ public class MainController {
     private final OrderController orderController;
     Scanner scanner = new Scanner(System.in);
 
-    public MainController(OrderController orderController) {
+    public MainController(CustomerController customerController, OrderController orderController) {
         this.orderController = orderController;
     }
 
@@ -54,4 +54,6 @@ public class MainController {
     public void closeController() {
         cycleProgram = false;
     }
+
+
 }

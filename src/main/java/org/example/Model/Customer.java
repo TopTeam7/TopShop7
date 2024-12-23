@@ -14,6 +14,14 @@ public class Customer {
         this.type = type;
     }
 
+    // Конструктор из строки
+    public Customer(String line) {
+        String[] parts = line.split(";");
+        this.id = Integer.parseInt(parts[0]);
+        this.name = parts[1];
+        this.type = CustomerType.valueOf(parts[2]);
+    }
+
     public int getId() {
         return id;
     }
@@ -28,10 +36,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                '}';
+        return id + ";" + name + ";" + type;
     }
 }
