@@ -64,7 +64,7 @@ public class CustomerRepository {
             System.err.println("Ошибка при чтении файла last_id.txt: " + e.getMessage());
         }
 
-        lastId++; // Увеличиваем ID
+        lastId++;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(idFilePath))) {
             writer.write(String.valueOf(lastId));
