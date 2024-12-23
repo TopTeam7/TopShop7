@@ -14,7 +14,7 @@ public class Customer {
         this.type = type;
     }
 
-    // Конструктор из строки
+
     public Customer(String line) {
         String[] parts = line.split(";");
         this.id = Integer.parseInt(parts[0]);
