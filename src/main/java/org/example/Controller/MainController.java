@@ -10,7 +10,6 @@ public class MainController {
     private boolean isCycleProgram = true;
     private ProductController productController;
 
-
     Scanner scanner = new Scanner(System.in);
 
     public MainController(CustomerController customerController, OrderController orderController, ProductController productController) {
