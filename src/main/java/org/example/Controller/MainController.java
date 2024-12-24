@@ -7,16 +7,19 @@ import java.util.Scanner;
 public class MainController {
     private boolean cycleProgram = true;
     private final OrderController orderController;
+    private boolean isCycleProgram = true;
+    private ProductController productController;
+
     Scanner scanner = new Scanner(System.in);
 
-    public MainController(CustomerController customerController, OrderController orderController) {
+    public MainController(CustomerController customerController, OrderController orderController, ProductController productController) {
         this.orderController = orderController;
+        this.productController = productController;
     }
-
-    /**Метод нe принимает параметры
+    /**
+     * Метод нe принимает параметры
      * Метод запускает главное меню программы
-     *
-      */
+     */
     public void start() {
         while (cycleProgram) {
             System.out.println("Для управления покупателями нажмите цифру 1");
@@ -28,7 +31,7 @@ public class MainController {
                 switch (choice) {
 
                     // здесь добавить вызов методов для покупателя и продукта
-
+                    case 2 -> startProduct();
                     case 3 -> startOrder();
                     default -> closeController();
                 }
@@ -37,6 +40,15 @@ public class MainController {
             }
         }
     }
+
+    /**
+     * Метод не принимает параметры
+     * Метод переходит в меню товары
+     */
+    public void startProduct() {
+        productController.startProduct(isCycleProgram);
+    }
+
 
     /**
      * Метод не принимает параметры
