@@ -24,6 +24,7 @@ public class ProductService {
         Product newProducts = new Product(null, title, price, category);
         return productRepository.save(newProducts);
     }
+
     /**
      * Метод не примает параметры.
      * Метод возвращает список всех товаров.

@@ -16,21 +16,17 @@ public class Main {
 
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
-
+        ProductRepository productRepository = new ProductRepository();
 
         CustomerService customerService = new CustomerService(customerRepository);
         OrderService orderService = new OrderService(orderRepository);
-
+        ProductService productService = new ProductService(productRepository) ;
 
         CustomerController customerController = new CustomerController(customerService);
         OrderController orderController = new OrderController(orderService);
-
-        ProductRepository productRepository = new ProductRepository();
-        ProductService productService = new ProductService(productRepository) ;
         ProductController productController = new ProductController(productService);
 
         MainController mainController = new MainController(customerController, orderController, productController);
-
 
         mainController.start();
     }

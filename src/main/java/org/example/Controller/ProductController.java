@@ -89,7 +89,6 @@ public class ProductController {
         String product = productService.getAll().toString();
         System.out.println(product);
     }
-
     /**
      * Метод не примает параметры
      * Метод findProduct() для поиска товара по ID.

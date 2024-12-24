@@ -55,7 +55,6 @@ import java.util.Objects;
             org.example.Model.Product products = (org.example.Model.Product) o;
             return Objects.equals(id, products.id) && Objects.equals(title, products.title) && Objects.equals(price, products.price) && Objects.equals(category, products.category);
         }
-
         @Override
         public int hashCode() {
             return Objects.hash(id, title, price, category);

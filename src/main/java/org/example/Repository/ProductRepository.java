@@ -31,7 +31,6 @@ public class ProductRepository {
             throw new ProductNotFoundException("Товар не найден");
         }
     }
-
     /**
      * Метод не примает параметры
      * Метод findAll() возвращает список всех товаров Product.

@@ -16,7 +16,6 @@ public class MainController {
         this.orderController = orderController;
         this.productController = productController;
     }
-
     /**
      * Метод нe принимает параметры
      * Метод запускает главное меню программы
