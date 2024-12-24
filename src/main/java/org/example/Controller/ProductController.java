@@ -17,6 +17,7 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+
     /**
      * Метод примает параметры
      *
@@ -88,7 +89,6 @@ public class ProductController {
         String product = productService.getAll().toString();
         System.out.println(product);
     }
-
 
     /**
      * Метод не примает параметры
