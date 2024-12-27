@@ -1,71 +1,42 @@
 package org.example.Controller;
 
-import org.example.OrderException.OrderNotFoundExcetion;
-
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainController {
-    private boolean cycleProgram = true;
+    private final CustomerController customerController;
     private final OrderController orderController;
-    private boolean isCycleProgram = true;
-    private ProductController productController;
-
-    Scanner scanner = new Scanner(System.in);
+    private final ProductController productController;
+    private final Scanner scanner;
 
     public MainController(CustomerController customerController, OrderController orderController, ProductController productController) {
+        this.customerController = customerController;
         this.orderController = orderController;
         this.productController = productController;
+        this.scanner = new Scanner(System.in);
     }
-    /**
-     * Метод нe принимает параметры
-     * Метод запускает главное меню программы
-     */
-    public void start() {
-        while (cycleProgram) {
-            System.out.println("Для управления покупателями нажмите цифру 1");
-            System.out.println("Для управления продуктами нажмите цифру 2");
-            System.out.println("Для управления заказами нажмите цифру 3");
-            System.out.println("Для выхода их программы нажмите цифру 0");
-            int choice = scanner.nextInt();
-            try {
-                switch (choice) {
 
-                    // здесь добавить вызов методов для покупателя и продукта
-                    case 2 -> startProduct();
-                    case 3 -> startOrder();
-                    default -> closeController();
+    public void start() throws IOException {
+        while (true) {
+            System.out.println("===== Главное меню =====");
+            System.out.println("1. Управление покупателями");
+            System.out.println("2. Управление заказами");
+            System.out.println("3. Управление товарами");
+            System.out.println("0. Выход");
+            System.out.print("Выберите опцию: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Очистка буфера
+
+            switch (choice) {
+                case 1 -> customerController.showMenu();
+                case 2 -> orderController.showMenu();
+                case 3 -> productController.showMenu();
+                case 0 -> {
+                    System.out.println("Выход из программы.");
+                    return;
                 }
-            } catch (OrderNotFoundExcetion e) {
-                System.out.println(e);
+                default -> System.out.println("Неверный выбор. Попробуйте снова.");
             }
         }
     }
-
-    /**
-     * Метод не принимает параметры
-     * Метод переходит в меню товары
-     */
-    public void startProduct() {
-        productController.startProduct(isCycleProgram);
-    }
-
-
-    /**
-     * Метод не принимает параметры
-     * Метод переходит в меню Заказ
-     */
-    public void startOrder() {
-
-        orderController.startOrder(cycleProgram);
-    }
-
-    /**
-     * Метод не принимает
-     * Метод зпрекращает работу программы
-     */
-    public void closeController() {
-        cycleProgram = false;
-    }
-
-
 }

@@ -1,4 +1,4 @@
- package org.example;
+package org.example;
 
 import org.example.Controller.CustomerController;
 import org.example.Controller.MainController;
@@ -11,8 +11,15 @@ import org.example.Service.CustomerService;
 import org.example.Service.OrderService;
 import org.example.Service.ProductService;
 
+
+import java.io.IOException;
+import java.util.Scanner;
+
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
@@ -20,7 +27,7 @@ public class Main {
 
         CustomerService customerService = new CustomerService(customerRepository);
         OrderService orderService = new OrderService(orderRepository);
-        ProductService productService = new ProductService(productRepository) ;
+        ProductService productService = new ProductService(productRepository);
 
         CustomerController customerController = new CustomerController(customerService);
         OrderController orderController = new OrderController(orderService);
@@ -30,4 +37,6 @@ public class Main {
 
         mainController.start();
     }
-}
+    }
+
+
