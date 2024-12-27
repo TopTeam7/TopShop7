@@ -1,10 +1,11 @@
 package org.example.Service;
 
-import org.example.OrderException.CustomerNotFoundException;
 import org.example.Model.Customer;
 import org.example.Model.CustomerType;
 import org.example.Repository.CustomerRepository;
+import org.example.OrderException.CustomerNotFoundException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,6 +14,11 @@ import java.util.List;
 public class CustomerService {
     private final CustomerRepository repository;
 
+    /**
+     * Конструктор.
+     *
+     * @param repository репозиторий для работы с данными покупателей
+     */
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
     }
@@ -20,36 +26,34 @@ public class CustomerService {
     /**
      * Добавляет нового покупателя.
      *
-     * @param name имя покупателя.
-     * @param type тип покупателя.
+     * @param name имя покупателя
+     * @param type тип покупателя
+     * @throws IOException если произошла ошибка ввода-вывода
      */
-    public void addCustomer(String name, CustomerType type) {
-        int newId = repository.generateNewId(); // Генерируем новый ID
-        List<Customer> customers = repository.loadCustomers();
-        customers.add(new Customer(newId, name, type));
-        repository.saveCustomers(customers);
+    public void addCustomer(String name, CustomerType type) throws IOException {
+        Customer customer = new Customer(0, name, type); // ID будет сгенерирован в репозитории
+        repository.addCustomer(customer);
     }
 
     /**
      * Возвращает список всех покупателей.
      *
-     * @return список покупателей.
+     * @return список покупателей
+     * @throws IOException если произошла ошибка ввода-вывода
      */
-    public List<Customer> getAllCustomers() {
-        return repository.loadCustomers();
+    public List<Customer> getAllCustomers() throws IOException {
+        return repository.findAll();
     }
 
     /**
      * Находит покупателя по ID.
      *
-     * @param id ID покупателя.
-     * @return покупатель.
-     * @throws CustomerNotFoundException если покупатель не найден.
+     * @param id идентификатор покупателя
+     * @return объект покупателя
+     * @throws IOException если произошла ошибка ввода-вывода
+     * @throws CustomerNotFoundException если покупатель не найден
      */
-    public Customer findCustomerById(int id) throws CustomerNotFoundException {
-        return repository.loadCustomers().stream()
-                .filter(customer -> customer.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new CustomerNotFoundException("Покупатель с ID " + id + " не найден"));
+    public Customer getCustomerById(int id) throws IOException, CustomerNotFoundException {
+        return repository.findById(id);
     }
 }
