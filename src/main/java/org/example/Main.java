@@ -27,7 +27,6 @@ public class Main {
         ProductController productController = new ProductController(productService);
 
         MainController mainController = new MainController(customerController, orderController, productController);
-
         mainController.start();
     }
 }

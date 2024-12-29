@@ -1,9 +1,11 @@
 package org.example.Controller;
 
+import org.example.Model.ProductCategory;
 import org.example.OrderException.ProductNotFoundException;
 import org.example.Service.ProductService;
 
 import java.util.Scanner;
+
 
 public class ProductController {
     private final ProductService productService;
@@ -55,7 +57,7 @@ public class ProductController {
      * и добавляет его в список.
      */
     private void addProduct() {
-        int categoryNumber = 0;
+        int categoryNum = 0;
         System.out.print("Введите название товара - ");
         productTitle = sc.nextLine();
 
@@ -65,19 +67,25 @@ public class ProductController {
 
         System.out.println(" Выберите категорию товара:");
 
-        System.out.println(" 1)Продукты");
-        System.out.println(" 2)Электроника");
-        System.out.println(" 3)Одежда");
-        categoryNumber = sc.nextInt();
+        System.out.println(" 1. " + ProductCategory.FOOD.getProductCategory());
+        System.out.println(" 2. " + ProductCategory.ELECTRONICS.getProductCategory());
+        System.out.println(" 3. " + ProductCategory.CLOTHING.getProductCategory());
+        categoryNum = sc.nextInt();
 
-        switch (categoryNumber) {
+        switch (categoryNum) {
             case 1 -> productCategory = "Фрукты";
             case 2 -> productCategory = "Смартфоны";
             case 3 -> productCategory = "Джинсовая одежда ";
             default -> productCategory = "Товар не найден";
         }
-        String info = productService.addProduct(productTitle, productPrice, productCategory).toString();
-        System.out.println(info);
+        try {
+            String category = String.valueOf(ProductCategory.getProducts(categoryNum).getProductCategory());
+            String info = productService.addProduct(productTitle, productPrice, productCategory).toString();
+            System.out.println(info);
+
+        } catch (IllegalArgumentException | ProductNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -85,22 +93,22 @@ public class ProductController {
      * Метод getProduct() показывает все доступные товары.
      */
     private void getProduct() {
-
         String product = productService.getAll().toString();
         System.out.println(product);
     }
+
     /**
      * Метод не примает параметры
      * Метод findProduct() для поиска товара по ID.
      */
     private void findProduct() {
         Integer findID;
+
         System.out.println("Поиск товара по ID  ");
         findID = sc.nextInt();
         sc.nextLine();
+
         String info = productService.getProduct(findID).toString();
         System.out.println(info);
-
-
     }
 }

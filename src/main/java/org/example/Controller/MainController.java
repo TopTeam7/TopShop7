@@ -34,6 +34,8 @@ public class MainController {
                     case 2 -> startProduct();
                     case 3 -> startOrder();
                     default -> closeController();
+
+
                 }
             } catch (OrderNotFoundExcetion e) {
                 System.out.println(e);
@@ -66,6 +68,4 @@ public class MainController {
     public void closeController() {
         cycleProgram = false;
     }
-
-
 }
