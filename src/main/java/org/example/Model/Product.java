@@ -1,18 +1,30 @@
 package org.example.Model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
     private Integer id;
     private String title;
-    private double price;
+    private int price;
     private String category;
 
-    public Product(Integer id, String title, double price, String category) {
+    public Product(Integer id, String title, int price, String category) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.category = category;
+    }
+
+    public Product(String fileProducts) {
+        String[] parts = fileProducts.split(";");
+        this.id = Integer.parseInt(parts[0]);
+        this.title = parts[1];
+        this.price = Integer.parseInt(parts[2]);
+        this.category = parts[3];
+    }
+
+    public Product() {
     }
 
     public Integer getId() {
@@ -31,11 +43,11 @@ public class Product {
         this.title = title;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -48,23 +60,8 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product products = (Product) o;
-        return Objects.equals(id, products.id) && Objects.equals(title, products.title) && Objects.equals(price, products.price) && Objects.equals(category, products.category);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, price, category);
-    }
-
-    @Override
     public String toString() {
-        return "Product{" + id + " " + title + " " + price + " " + category + "}";
+        return id + ";" + title + ";" + price + ";" + category;
     }
 }
-
 

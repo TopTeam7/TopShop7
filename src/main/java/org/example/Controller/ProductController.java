@@ -6,14 +6,13 @@ import org.example.Service.ProductService;
 
 import java.util.Scanner;
 
-
 public class ProductController {
     private final ProductService productService;
-    private boolean cyclePoductProgram = true;
+    private boolean cycleProductProgram = true;
 
     Scanner sc = new Scanner(System.in);
     private String productTitle;
-    private Integer productPrice;
+    private int productPrice;
     private String productCategory;
 
     public ProductController(ProductService productService) {
@@ -21,28 +20,28 @@ public class ProductController {
     }
 
     /**
-     * Метод примает параметры
+     * Метод принимает параметры
      *
      * @param isCycleProgram типа boolean
-     *                       Метод запускает взаимодействие с Product.
+     *                        Метод запускает взаимодействие с Product.
      */
     public void startProduct(boolean isCycleProgram) {
-        cyclePoductProgram = isCycleProgram;
-        while (cyclePoductProgram) {
-            int choise;
+        cycleProductProgram = isCycleProgram;
+        while (cycleProductProgram) {
+            int choice;
             System.out.println("===== Управление товарами =====");
             System.out.println("1. Добавить товар :");
             System.out.println("2. Посмотреть все доступные товары");
             System.out.println("3. Найти товар по ID");
             System.out.println("0. Назад ");
-            choise = sc.nextInt();
+            choice = sc.nextInt();
             sc.nextLine();
             try {
-                switch (choise) {
+                switch (choice) {
                     case 1 -> addProduct();
                     case 2 -> getProduct();
                     case 3 -> findProduct();
-                    case 4 -> System.out.println("Назад");
+                    case 0 -> System.out.println("Назад");
                     default -> System.out.println("Товар не найден");
                 }
             } catch (ProductNotFoundException e) {
@@ -52,7 +51,7 @@ public class ProductController {
     }
 
     /**
-     * Метод не примает параметры
+     * Метод не принимает параметры
      * Метод addProduct() инициализирует поля класса Product
      * и добавляет его в список.
      */
@@ -65,31 +64,29 @@ public class ProductController {
         productPrice = sc.nextInt();
         sc.nextLine();
 
-        System.out.println(" Выберите категорию товара:");
+        System.out.println("Выберите категорию товара:");
 
-        System.out.println(" 1. " + ProductCategory.FOOD.getProductCategory());
-        System.out.println(" 2. " + ProductCategory.ELECTRONICS.getProductCategory());
-        System.out.println(" 3. " + ProductCategory.CLOTHING.getProductCategory());
+        System.out.println("1. " + ProductCategory.FOOD.getProductCategory());
+        System.out.println("2. " + ProductCategory.ELECTRONICS.getProductCategory());
+        System.out.println("3. " + ProductCategory.CLOTHING.getProductCategory());
         categoryNum = sc.nextInt();
 
         switch (categoryNum) {
-            case 1 -> productCategory = "Фрукты";
-            case 2 -> productCategory = "Смартфоны";
-            case 3 -> productCategory = "Джинсовая одежда ";
+            case 1 -> productCategory = ProductCategory.FOOD.getProductCategory();
+            case 2 -> productCategory = ProductCategory.ELECTRONICS.getProductCategory();
+            case 3 -> productCategory = ProductCategory.CLOTHING.getProductCategory();
             default -> productCategory = "Товар не найден";
         }
         try {
-            String category = String.valueOf(ProductCategory.getProducts(categoryNum).getProductCategory());
             String info = productService.addProduct(productTitle, productPrice, productCategory).toString();
             System.out.println(info);
-
         } catch (IllegalArgumentException | ProductNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
-     * Метод не примает параметры
+     * Метод не принимает параметры
      * Метод getProduct() показывает все доступные товары.
      */
     private void getProduct() {
@@ -98,7 +95,7 @@ public class ProductController {
     }
 
     /**
-     * Метод не примает параметры
+     * Метод не принимает параметры
      * Метод findProduct() для поиска товара по ID.
      */
     private void findProduct() {

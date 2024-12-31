@@ -1,14 +1,14 @@
+
 package org.example.Controller;
 
-import org.example.OrderException.OrderNotFoundExcetion;
+
 
 import java.util.Scanner;
 
 public class MainController {
     private boolean cycleProgram = true;
     private final OrderController orderController;
-    private boolean isCycleProgram = true;
-    private ProductController productController;
+    private final ProductController productController;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -16,8 +16,9 @@ public class MainController {
         this.orderController = orderController;
         this.productController = productController;
     }
+
     /**
-     * Метод нe принимает параметры
+     * Метод не принимает параметры
      * Метод запускает главное меню программы
      */
     public void start() {
@@ -25,19 +26,17 @@ public class MainController {
             System.out.println("Для управления покупателями нажмите цифру 1");
             System.out.println("Для управления продуктами нажмите цифру 2");
             System.out.println("Для управления заказами нажмите цифру 3");
-            System.out.println("Для выхода их программы нажмите цифру 0");
+            System.out.println("Для выхода из программы нажмите цифру 0");
             int choice = scanner.nextInt();
             try {
                 switch (choice) {
-
-                    // здесь добавить вызов методов для покупателя и продукта
+                    case 1 -> startCustomer();
                     case 2 -> startProduct();
                     case 3 -> startOrder();
-                    default -> closeController();
-
-
+                    case 0 -> closeController();
+                    default -> System.out.println("Неверный выбор");
                 }
-            } catch (OrderNotFoundExcetion e) {
+            } catch (RuntimeException e) {
                 System.out.println(e);
             }
         }
@@ -48,24 +47,30 @@ public class MainController {
      * Метод переходит в меню товары
      */
     public void startProduct() {
-        productController.startProduct(isCycleProgram);
+        productController.startProduct(cycleProgram);
     }
-
 
     /**
      * Метод не принимает параметры
      * Метод переходит в меню Заказ
      */
     public void startOrder() {
-
         orderController.startOrder(cycleProgram);
     }
 
     /**
-     * Метод не принимает
-     * Метод зпрекращает работу программы
+     * Метод не принимает параметры
+     * Метод завершает работу программы
      */
     public void closeController() {
         cycleProgram = false;
+    }
+
+    /**
+     * Метод не принимает параметры
+     * Метод переходит в меню Покупатели
+     */
+    public void startCustomer() {
+        // Реализация для управления покупателями
     }
 }

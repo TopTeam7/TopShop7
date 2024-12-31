@@ -1,57 +1,117 @@
 package org.example.Repository;
 
 import org.example.Model.Product;
-import org.example.OrderException.ProductNotFoundException;
 
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository {
-    private final List<Product> products;
-    private int countID;
+    private final Path filePath ;
+    private final Path idFilePath;
 
-    public ProductRepository() {
-        this.products = new ArrayList<>();
-        countID = 0;
+    public ProductRepository(String filePath, String idFilePath) {
+        this.filePath = Path.of(filePath);
+        this.idFilePath = Path.of(idFilePath);
     }
+
     /**
-     * Метод примает параметры
+     * Загружает все продукты из файла.
      *
-     * @param product Метод  save() сохраняет товар в repository.
+     * @return список продуктов.
      */
-    public Product save(Product product) {
-        try {
-            product.setId(++countID);
-            if (products.add(product)) {
-                return product;
+    public List<Product> loadProducts() {
+        List<Product> products = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
+            String filePoducts;
+            System.out.println("Фрукты");
+            while ((filePoducts  = reader.readLine()) != null) {
+                products.add(new Product(filePoducts)); // Используем конструктор из строки
             }
-            return null;
-        } catch (IndexOutOfBoundsException e) {
-            throw new ProductNotFoundException("Товар не найден");
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
         }
-    }
-    /**
-     * Метод не примает параметры
-     * Метод findAll() возвращает список всех товаров Product.
-     */
-    public List<Product> findAll() {
         return products;
     }
 
     /**
-     * Метод примает параметры
+     * Сохраняет список продуктов в файл.
      *
-     * @param id типа int
-     *           Метод productProduct() возвращает товар по ID.
+     * @param products список продуктов.
      */
-    public Product productProduct(int id) {
-        try {
-            return products.stream()
-                    .filter(products -> products != null && products.getId() == id)
-                    .findFirst()
-                    .orElse(null);
-        } catch (IndexOutOfBoundsException e) {
-            throw new ProductNotFoundException("Товар не найден");
+    public void saveProducts(List<Product> products) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+            for (Product product : products) {
+                writer.write(product.toString()); // Используем toString() для сохранения
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Ошибка при записи в файл: " + e.getMessage());
         }
     }
+
+    /**
+     * Генерирует новый уникальный ID.
+     *
+     * @return новый ID.
+     */
+    public int generateNewId() {
+        int lastId = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(idFilePath.toFile()))) {
+            String fileProduct = reader.readLine();
+            if (fileProduct != null) {
+                lastId = Integer.parseInt(fileProduct);
+            }
+        } catch (IOException e) {
+            System.err.println("Ошибка при чтении файла idProducts_id.txt: " + e.getMessage());
+        }
+        lastId++;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(idFilePath.toFile()))) {
+            writer.write(String.valueOf(lastId));
+        } catch (IOException e) {
+            System.err.println("Ошибка при записи в файла idProducts_id.txt : " + e.getMessage());
+        }
+
+        return lastId;
+    }
+
+    /**
+     * Сохраняет продукт в файл.
+     *
+     * @param product продукт для сохранения.
+     * @return сохраненный продукт.
+     */
+    public Product save(Product product) {
+        List<Product> products = loadProducts();
+        product.setId(generateNewId());
+        products.add(product);
+        saveProducts(products);
+        return product;
+    }
+
+    /**
+     * Находит продукт по ID.
+     *
+     * @param id ID продукта.
+     * @return найденный продукт.
+     */
+    public Product findById(int id) {
+        List<Product> products = loadProducts();
+        return products.stream()
+                .filter(product -> product.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Возвращает все продукты.
+     *
+     * @return список всех продуктов.
+     */
+    public List<Product> findAll() {
+        return loadProducts();
+    }
 }
+
