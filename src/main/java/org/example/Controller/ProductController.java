@@ -3,10 +3,14 @@ package org.example.Controller;
 import org.example.Model.ProductCategory;
 import org.example.OrderException.ProductNotFoundException;
 import org.example.Service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
 public class ProductController {
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
     private final ProductService productService;
     private boolean cycleProductProgram = true;
 
@@ -23,7 +27,7 @@ public class ProductController {
      * Метод принимает параметры
      *
      * @param isCycleProgram типа boolean
-     *                        Метод запускает взаимодействие с Product.
+     *                       Метод запускает взаимодействие с Product.
      */
     public void startProduct(boolean isCycleProgram) {
         cycleProductProgram = isCycleProgram;
@@ -42,10 +46,10 @@ public class ProductController {
                     case 2 -> getProduct();
                     case 3 -> findProduct();
                     case 0 -> System.out.println("Назад");
-                    default -> System.out.println("Товар не найден");
+                    default -> log.error("Товар не найден");
                 }
             } catch (ProductNotFoundException e) {
-                System.out.println(e);
+                log.error("Ошибка: ", e);
             }
         }
     }
@@ -79,9 +83,10 @@ public class ProductController {
         }
         try {
             String info = productService.addProduct(productTitle, productPrice, productCategory).toString();
+            log.info("Добавленный продукт: {}", info);
             System.out.println(info);
         } catch (IllegalArgumentException | ProductNotFoundException e) {
-            System.out.println(e.getMessage());
+            log.error("Ошибка: ", e);
         }
     }
 
@@ -91,6 +96,7 @@ public class ProductController {
      */
     private void getProduct() {
         String product = productService.getAll().toString();
+        log.info("Все продукты: {}", product);
         System.out.println(product);
     }
 
@@ -106,6 +112,7 @@ public class ProductController {
         sc.nextLine();
 
         String info = productService.getProduct(findID).toString();
+        log.info("Продукт, найденный ID {}: {}", findID, info);
         System.out.println(info);
     }
 }

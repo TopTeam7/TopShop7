@@ -1,11 +1,13 @@
-
 package org.example.Controller;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
 public class MainController {
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
+
     private boolean cycleProgram = true;
     private final OrderController orderController;
     private final ProductController productController;
@@ -18,7 +20,7 @@ public class MainController {
     }
 
     /**
-     * Метод не принимает параметры
+     * Метод не принимает параметры.
      * Метод запускает главное меню программы
      */
     public void start() {
@@ -34,43 +36,47 @@ public class MainController {
                     case 2 -> startProduct();
                     case 3 -> startOrder();
                     case 0 -> closeController();
-                    default -> System.out.println("Неверный выбор");
+                    default -> log.info("Неверный выбор");
                 }
             } catch (RuntimeException e) {
-                System.out.println(e);
+                log.error("Ошибка: ", e);
             }
         }
     }
 
     /**
-     * Метод не принимает параметры
+     * Метод не принимает параметры.
      * Метод переходит в меню товары
      */
     public void startProduct() {
+        log.info("Начало управления продуктом");
         productController.startProduct(cycleProgram);
     }
 
     /**
-     * Метод не принимает параметры
+     * Метод не принимает параметры.
      * Метод переходит в меню Заказ
      */
     public void startOrder() {
+        log.info("Управление начальными заказами");
         orderController.startOrder(cycleProgram);
     }
 
     /**
-     * Метод не принимает параметры
+     * Метод не принимает параметры.
      * Метод завершает работу программы
      */
     public void closeController() {
+        log.info("Закрытие программы");
         cycleProgram = false;
     }
 
     /**
-     * Метод не принимает параметры
+     * Метод не принимает параметры.
      * Метод переходит в меню Покупатели
      */
     public void startCustomer() {
+        log.info("Начало работы с клиентами");
         // Реализация для управления покупателями
     }
 }

@@ -10,9 +10,17 @@ import org.example.Repository.ProductRepository;
 import org.example.Service.CustomerService;
 import org.example.Service.OrderService;
 import org.example.Service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
+        log.info("Это информационное сообщение");
+        log.warn("Это предупреждающее сообщение");
+        log.error("Это сообщение об ошибке");
+
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
         ProductRepository productRepository = new ProductRepository("src/main/resources/products.txt", "src/main/resources/idProducts_id.txt");
