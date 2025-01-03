@@ -1,4 +1,4 @@
- package org.example;
+package org.example;
 
 import org.example.Controller.CustomerController;
 import org.example.Controller.MainController;
@@ -13,14 +13,13 @@ import org.example.Service.ProductService;
 
 public class Main {
     public static void main(String[] args) {
-
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
-        ProductRepository productRepository = new ProductRepository();
+        ProductRepository productRepository = new ProductRepository("src/main/resources/products.txt", "src/main/resources/idProducts_id.txt");
 
         CustomerService customerService = new CustomerService(customerRepository);
         OrderService orderService = new OrderService(orderRepository);
-        ProductService productService = new ProductService(productRepository) ;
+        ProductService productService = new ProductService(productRepository);
 
         CustomerController customerController = new CustomerController(customerService);
         OrderController orderController = new OrderController(orderService);

@@ -13,7 +13,7 @@ public class ProductService {
     }
 
     /**
-     * Метод addProduct() примает параметры
+     * Метод addProduct() принимает параметры
      *
      * @param title    типа String
      * @param price    типа int
@@ -21,11 +21,12 @@ public class ProductService {
      *                 Метод создает новый товар
      */
     public Product addProduct(String title, int price, String category) {
-        Product newProducts = new Product(null, title, price, category);
-        return productRepository.save(newProducts);
+        Product newProduct = new Product(null, title, price, category);
+        return productRepository.save(newProduct);
     }
+
     /**
-     * Метод не примает параметры.
+     * Метод не принимает параметры.
      * Метод возвращает список всех товаров.
      */
     public List<Product> getAll() {
@@ -33,10 +34,10 @@ public class ProductService {
     }
 
     /**
-     * Метод примает параметр id
+     * Метод принимает параметр id
      * Метод возвращает товар, найденный по ID.
      */
     public Product getProduct(int id) {
-        return productRepository.productProduct(id);
+        return productRepository.findById(id);
     }
 }
