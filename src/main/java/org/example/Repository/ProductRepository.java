@@ -1,6 +1,8 @@
 package org.example.Repository;
 
 import org.example.Model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -8,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository {
-    private final Path filePath ;
+
+    private static final Logger log = LoggerFactory.getLogger(ProductRepository.class);
+
+    private final Path filePath;
     private final Path idFilePath;
 
     public ProductRepository(String filePath, String idFilePath) {
@@ -25,12 +30,13 @@ public class ProductRepository {
         List<Product> products = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String filePoducts;
-            System.out.println("Фрукты");
-            while ((filePoducts  = reader.readLine()) != null) {
+            log.info("Загрузка продуктов из файла: {}", filePath);
+
+            while ((filePoducts = reader.readLine()) != null) {
                 products.add(new Product(filePoducts)); // Используем конструктор из строки
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            log.warn("Ошибка при чтении файла: ", e);
         }
         return products;
     }
@@ -42,12 +48,13 @@ public class ProductRepository {
      */
     public void saveProducts(List<Product> products) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+            log.info("Сохранение продуктов в файл: {}", filePath);
             for (Product product : products) {
                 writer.write(product.toString()); // Используем toString() для сохранения
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при записи в файл: " + e.getMessage());
+            log.warn("Ошибка при записи в файл: ", e);
         }
     }
 
@@ -64,14 +71,14 @@ public class ProductRepository {
                 lastId = Integer.parseInt(fileProduct);
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла idProducts_id.txt: " + e.getMessage());
+            log.error("Ошибка при чтении файла idProducts_id.txt: ", e);
         }
         lastId++;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(idFilePath.toFile()))) {
             writer.write(String.valueOf(lastId));
         } catch (IOException e) {
-            System.err.println("Ошибка при записи в файла idProducts_id.txt : " + e.getMessage());
+            log.error("Ошибка при записи в файла idProducts_id.txt : ", e);
         }
 
         return lastId;
