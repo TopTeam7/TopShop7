@@ -24,7 +24,7 @@ public class CustomerRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                customers.add(new Customer(line)); // Используем конструктор из строки
+                customers.add(new Customer(line)); // Используем конструктор из строки.
             }
         } catch (IOException e) {
             System.err.println("Ошибка при чтении файла: " + e.getMessage());

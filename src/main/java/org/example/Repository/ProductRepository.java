@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ProductRepository {
+public class ProductRepository {
 
     private static final Logger log = LoggerFactory.getLogger(ProductRepository.class); // Логгер для логирования событий
 
@@ -38,7 +38,7 @@ public class                                                                    
         } catch (IOException e) {
             log.warn("Ошибка при чтении файла: ", e); // Логирование ошибки при чтении файла
         }
-        return products; // Возврат списка продуктов
+        return products; // Возврат списка продуктов.
     }
 
     /**

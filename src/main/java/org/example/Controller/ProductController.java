@@ -15,7 +15,7 @@ public class ProductController {
     private boolean cycleProductProgram = true; // Флаг для управления циклом программы продуктов
 
     Scanner sc = new Scanner(System.in); // Сканер для ввода данных с консоли
-    private String productTitle; // Название продукта
+    private String productTitle; // Название продукта.
     private int productPrice; // Цена продукта
     private String productCategory; // Категория продукта
 

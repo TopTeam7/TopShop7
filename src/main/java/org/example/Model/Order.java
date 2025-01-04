@@ -8,7 +8,7 @@ public class Order {
     private int productId;
     private String orderStatus;
 
-    public Order(Integer orderId, int buyerId,String orderStatus,int productId) {
+    public Order(Integer orderId, int buyerId, String orderStatus, int productId) {
         this.orderId = orderId;
         this.buyerId = buyerId;
 

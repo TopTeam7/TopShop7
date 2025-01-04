@@ -18,9 +18,10 @@ public class OrderRepository {
         this.orderCountId = 0;
     }
 
-    /** Метод принимает параметр
-      * @param order
-     * Метод добавляет новы заказ в лист заказов и присвавает Id номер
+    /**
+     * Метод принимает параметр
+     *
+     * @param order Метод добавляет новы заказ в лист заказов и присвавает Id номер
      * @return Order
      */
     public Order saveOrder(Order order) {
@@ -29,18 +30,22 @@ public class OrderRepository {
         return order;
     }
 
-    /**Метод не принимает параметров
+    /**
+     * Метод не принимает параметров
      * Метод возврфщает лист заказов
+     *
      * @return List<Order>
      */
     public List<Order> listOrder() {
         return orders;
     }
 
-    /**Метод принимает параметры
-      * @param orderId типа int
+    /**
+     * Метод принимает параметры
+     *
+     * @param orderId   типа int
      * @param newStatus типа String
-     * Метод достает заказ из листа по Id номеру меняет его статус
+     *                  Метод достает заказ из листа по Id номеру меняет его статус
      */
     public void changeStatusOrder(int orderId, String newStatus) {
         try {
@@ -52,8 +57,9 @@ public class OrderRepository {
 
     /**
      * Метод принимает параметр
-      * @param id типа int
-     *  Метод возвращает заказ по номеру Id
+     *
+     * @param id типа int
+     *           Метод возвращает заказ по номеру Id
      * @return Order
      */
     public Order getOrderById(int id) {

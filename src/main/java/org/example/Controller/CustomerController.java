@@ -31,7 +31,7 @@ public class CustomerController {
             System.out.println("4. Выход");
             System.out.print("Выберите действие: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine(); // Очистка буфера.
 
             switch (choice) {
                 case 1 -> addCustomer();

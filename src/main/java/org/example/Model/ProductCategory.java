@@ -19,7 +19,7 @@ public enum ProductCategory {
         return productCategory;
     }
 
-    // Метод для получения категории продукта по номеру выбора
+    // Метод для получения категории продукта по номеру выбора.
     public static ProductCategory getProducts(int selection) {
         return Arrays.stream(values()) // Преобразование массива значений перечисления в поток
                 .filter(c -> c.ordinal() + 1 == selection) // Фильтрация по номеру выбора

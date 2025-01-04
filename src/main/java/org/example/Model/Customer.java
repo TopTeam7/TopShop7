@@ -14,7 +14,6 @@ public class Customer {
         this.type = type;
     }
 
-
     public Customer(String line) {
         String[] parts = line.split(";");
         this.id = Integer.parseInt(parts[0]);

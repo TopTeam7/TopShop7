@@ -7,4 +7,5 @@ public enum CustomerType {
     NEW,
     REGULAR,
     VIP
+
 }

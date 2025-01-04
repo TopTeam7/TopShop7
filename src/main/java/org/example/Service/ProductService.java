@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class ProductService {
-    private static final Logger log = LoggerFactory.getLogger(ProductService.class); // Логгер для логирования событий
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class); // Логгер для логирования событий.
     private final ProductRepository productRepository; // Репозиторий для управления продуктами
 
     public ProductService(ProductRepository productRepository) {

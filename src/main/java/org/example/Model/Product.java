@@ -14,7 +14,7 @@ public class Product {
         this.category = category;
     }
 
-    // Конструктор для создания продукта из строки, разделенной точками с запятой
+    // Конструктор для создания продукта из строки, разделенной точками с запятой.
     public Product(String fileProducts) {
         String[] parts = fileProducts.split(";"); // Разделение строки на части
         this.id = Integer.parseInt(parts[0]); // Преобразование первой части в ID

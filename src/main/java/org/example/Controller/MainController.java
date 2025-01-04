@@ -30,7 +30,7 @@ public class MainController {
             System.out.println("Для управления продуктами нажмите цифру 2");
             System.out.println("Для управления заказами нажмите цифру 3");
             System.out.println("Для выхода из программы нажмите цифру 0");
-            int choice = scanner.nextInt(); // Считывание выбора пользователя
+            int choice = scanner.nextInt(); // Считывание выбора пользователя.
             try {
                 switch (choice) {
                     case 1 -> startCustomer(); // Переход в меню управления покупателями

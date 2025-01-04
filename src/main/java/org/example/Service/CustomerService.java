@@ -44,7 +44,7 @@ public class CustomerService {
      *
      * @param id ID покупателя.
      * @return покупатель.
-     * @throws CustomerNotFoundException если покупатель не найден.
+     * @throws CustomerNotFoundException если покупатель не найден
      */
     public Customer findCustomerById(int id) throws CustomerNotFoundException {
         return repository.loadCustomers().stream()

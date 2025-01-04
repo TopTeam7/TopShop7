@@ -35,7 +35,6 @@ public class OrderController {
                     case 3 -> getOrderById();
                     case 4 -> changeStatusOrder();
                     default -> back();
-
                 }
             } catch (OrderNotFoundExcetion e) {
                 System.out.println(e);
@@ -66,23 +65,23 @@ public class OrderController {
         System.out.println(orderView);
     }
 
-    /**Метод не принимает параметры
+    /**
+     * Метод не принимает параметры
      * метод выводит список заказов к консоль
-     *
      */
     public void showOrders() {
-        if(orderService.listToView().isEmpty()){
+        if (orderService.listToView().isEmpty()) {
             System.out.println("Список заказов пуст");
-        }else {
+        } else {
             String view = orderService.listToView().toString();
             System.out.println(view);
         }
     }
 
-    /**Метод не принимает параметры
+    /**
+     * Метод не принимает параметры
      * Метод позволяет ввести  новый статус заказа
-     *
-      */
+     */
     public void changeStatusOrder() {
 
         System.out.println("Введите новый статус заказа");
@@ -91,9 +90,11 @@ public class OrderController {
         System.out.println("Статус заказа изменен");
     }
 
-    /**Метод выводить в консоль заказ по указанному Id
+    /**
+     * Метод выводить в консоль заказ по указанному Id
      * Метод не принимает.
      * Метод возвращает объект типа Order
+     *
      * @return Order
      */
     public int getOrderById() {
@@ -103,9 +104,10 @@ public class OrderController {
         return orderService.getOrderById(id).getOrderId();
     }
 
-    /**Метод не принимает
+    /**
+     * Метод не принимает
      * Метод возвращет в главное меню
-      */
+     */
     public void back() {
         cycleOrderProgram = false;
     }
