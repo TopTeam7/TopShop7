@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class ProductService {
-    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-    private final ProductRepository productRepository;
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class); // Логгер для логирования событий
+    private final ProductRepository productRepository; // Репозиторий для управления продуктами
 
     public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+        this.productRepository = productRepository; // Инициализация репозитория
     }
 
     /**
@@ -24,9 +24,9 @@ public class ProductService {
      *                 Метод создает новый товар
      */
     public Product addProduct(String title, int price, String category) {
-        log.info("Добавление нового продукта: title={}, price={}, category={}", title, price, category);
-        Product newProduct = new Product(null, title, price, category);
-        return productRepository.save(newProduct);
+        log.info("Добавление нового продукта: title={}, price={}, category={}", title, price, category); // Логирование начала добавления нового продукта
+        Product newProduct = new Product(null, title, price, category); // Создание нового продукта
+        return productRepository.save(newProduct); // Сохранение продукта в репозитории
     }
 
     /**
@@ -34,8 +34,8 @@ public class ProductService {
      * Метод возвращает список всех товаров.
      */
     public List<Product> getAll() {
-        log.info("Получение всех продуктов");
-        return productRepository.findAll();
+        log.info("Получение всех продуктов"); // Логирование начала получения всех продуктов
+        return productRepository.findAll(); // Получение всех продуктов из репозитория
     }
 
     /**
@@ -43,7 +43,7 @@ public class ProductService {
      * Метод возвращает товар, найденный по ID.
      */
     public Product getProduct(int id) {
-        log.info("Получение продукта с помощью ID: {}", id);
-        return productRepository.findById(id);
+        log.info("Получение продукта с помощью ID: {}", id); // Логирование начала получения продукта по ID
+        return productRepository.findById(id); // Получение продукта по ID из репозитория
     }
 }

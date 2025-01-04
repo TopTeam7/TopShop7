@@ -1,0 +1,5 @@
+2025-01-04 01:12:58 [main] INFO  org.example.Main - Это информационное сообщение
+2025-01-04 01:12:58 [main] WARN  org.example.Main - Это предупреждающее сообщение
+2025-01-04 01:12:58 [main] ERROR org.example.Main - Это сообщение об ошибке
+2025-01-04 01:13:06 [main] INFO  o.example.Controller.MainController - Начало работы с клиентами
+2025-01-04 01:13:20 [main] INFO  o.example.Controller.MainController - Начало работы с клиентами
