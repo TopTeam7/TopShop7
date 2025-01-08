@@ -26,7 +26,7 @@ public class Main {
         ProductRepository productRepository = new ProductRepository("src/main/resources/products.txt", "src/main/resources/idProducts_id.txt");
 
         CustomerService customerService = new CustomerService(customerRepository);
-        OrderService orderService = new OrderService(orderRepository);
+        OrderService orderService = new OrderService(orderRepository,customerRepository,productRepository);
         ProductService productService = new ProductService(productRepository);
 
         CustomerController customerController = new CustomerController(customerService);

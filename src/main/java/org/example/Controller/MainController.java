@@ -25,10 +25,10 @@ public class MainController {
      */
     public void start() {
         while (cycleProgram) {
-            System.out.println("Для управления покупателями нажмите цифру 1");
-            System.out.println("Для управления продуктами нажмите цифру 2");
-            System.out.println("Для управления заказами нажмите цифру 3");
-            System.out.println("Для выхода из программы нажмите цифру 0");
+            System.out.println("1: управление покупателями");
+            System.out.println("2: управление продуктами");
+            System.out.println("3: управление заказами");
+            System.out.println("0: закрыть приложение ");
             int choice = scanner.nextInt();
             try {
                 switch (choice) {
