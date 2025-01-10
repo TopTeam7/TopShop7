@@ -1,9 +1,9 @@
 package org.example.Controller;
 
-import org.example.OrderException.CustomerNotFoundException;
 import org.example.Model.Customer;
-import org.example.Model.CustomerType;
 import org.example.Service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,63 +12,40 @@ import java.util.Scanner;
  * Контроллер для управления покупателями.
  */
 public class CustomerController {
-    private final CustomerService service;
-    private final Scanner scanner;
+    private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
+    private final CustomerService customerService = new CustomerService();
+    private final Scanner scanner = new Scanner(System.in);
 
-    public CustomerController(CustomerService service) {
-        this.service = service;
-        this.scanner = new Scanner(System.in);
+    /**
+     * Добавляет нового покупателя.
+     *
+     * @param name имя покупателя
+     * @param type тип покупателя
+     */
+    public void addCustomer(String name, String type) {
+        customerService.addCustomer(name, type);
+        log.info("Добавлен новый покупатель: {}, {}", name, type);
     }
 
     /**
-     * Запускает консольное меню.
+     * Показывает список всех покупателей.
      */
-    public void run() {
-        while (true) {
-            System.out.println("1. Добавить покупателя");
-            System.out.println("2. Показать всех покупателей");
-            System.out.println("3. Найти покупателя по ID");
-            System.out.println("4. Выход");
-            System.out.print("Выберите действие: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
-
-            switch (choice) {
-                case 1 -> addCustomer();
-                case 2 -> showAllCustomers();
-                case 3 -> findCustomerById();
-                case 4 -> {
-                    System.out.println("Выход...");
-                    return;
-                }
-                default -> System.out.println("Неверный выбор. Попробуйте снова.");
-            }
-        }
-    }
-
-    private void addCustomer() {
-        System.out.print("Введите имя покупателя: ");
-        String name = scanner.nextLine();
-        System.out.print("Введите тип покупателя (NEW, REGULAR, VIP): ");
-        CustomerType type = CustomerType.valueOf(scanner.nextLine().toUpperCase());
-        service.addCustomer(name, type);
-        System.out.println("Покупатель добавлен!");
-    }
-
-    private void showAllCustomers() {
-        List<Customer> customers = service.getAllCustomers();
+    public void showAllCustomers() {
+        List<Customer> customers = customerService.getAllCustomers();
         customers.forEach(System.out::println);
     }
 
-    private void findCustomerById() {
-        System.out.print("Введите ID покупателя: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Очистка буфера
+    /**
+     * Находит покупателя по ID.
+     *
+     * @param id идентификатор покупателя
+     */
+    public void findCustomerById(int id) {
         try {
-            Customer customer = service.findCustomerById(id);
+            Customer customer = customerService.findCustomerById(id);
             System.out.println("Найден покупатель: " + customer);
-        } catch (CustomerNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (RuntimeException e) {
+            log.error("Ошибка при поиске покупателя: ", e);
         }
     }
 }
