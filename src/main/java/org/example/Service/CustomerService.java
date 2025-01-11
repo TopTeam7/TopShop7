@@ -2,7 +2,7 @@ package org.example.Service;
 
 import org.example.exception.CustomerNotFoundException;
 import org.example.Model.Customer;
-import org.example.Model.CustomerType; // Импорт CustomerType
+import org.example.Model.CustomerType;
 import org.example.Repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ import java.util.List;
 public class CustomerService {
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
     private final CustomerRepository repository = new CustomerRepository();
-    private org.example.Model.Customer Customer;
 
     /**
      * Добавляет нового покупателя.
@@ -25,7 +24,7 @@ public class CustomerService {
      */
     public void addCustomer(String name, String type) {
         Customer customer = new Customer(0, name, CustomerType.valueOf(type)); // Используем CustomerType
-        repository.addCustomer(Customer);
+        repository.addCustomer(customer); // Исправлено: передаем объект customer
     }
 
     /**

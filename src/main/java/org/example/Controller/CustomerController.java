@@ -13,8 +13,17 @@ import java.util.Scanner;
  */
 public class CustomerController {
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
-    private final CustomerService customerService = new CustomerService();
+    private final CustomerService customerService; // Убрана инициализация
     private final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Конструктор для создания CustomerController.
+     *
+     * @param customerService сервис для работы с покупателями
+     */
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     /**
      * Добавляет нового покупателя.
@@ -47,5 +56,8 @@ public class CustomerController {
         } catch (RuntimeException e) {
             log.error("Ошибка при поиске покупателя: ", e);
         }
+    }
+
+    public void startCustomer() {
     }
 }
