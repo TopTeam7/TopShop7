@@ -1,0 +1,10 @@
+1;Alice;NEW
+2;Bob;VIP
+3;Charlie;REGULAR
+4;David;NEW
+5;Eve;VIP
+6;Frank;REGULAR
+7;Grace;NEW
+8;Hank;VIP
+9;Ivy;REGULAR
+10;Jack;NEW

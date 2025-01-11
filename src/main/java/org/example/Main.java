@@ -10,13 +10,12 @@ import org.example.Controller.ProductController;
  */
 public class Main {
     public static void main(String[] args) {
-        // Создаём контроллеры
+
         CustomerController customerController = new CustomerController();
         OrderController orderController = new OrderController();
         ProductController productController = new ProductController();
 
-        // Создаём главный контроллер и запускаем программу
-        MainController mainController = new MainController(customerController, orderController, productController);
+                MainController mainController = new MainController(customerController, orderController, productController);
         mainController.start();
     }
 }

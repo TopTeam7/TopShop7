@@ -55,6 +55,13 @@
         </filter>
     </appender>
 
+    <!-- Логгер для Customer -->
+    <logger name="org.model.Customer" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="ERROR_FILE" />
+        <appender-ref ref="WARN_FILE" />
+    </logger>
 
     <root level="trace">/ol
         <appender-ref ref="CONSOLE"/>
