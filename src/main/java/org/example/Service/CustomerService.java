@@ -14,7 +14,16 @@ import java.util.List;
  */
 public class CustomerService {
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
-    private final CustomerRepository repository = new CustomerRepository();
+    private final CustomerRepository repository;
+
+    /**
+     * Конструктор для создания CustomerService.
+     *
+     * @param repository репозиторий для работы с покупателями
+     */
+    public CustomerService(CustomerRepository repository) {
+        this.repository = repository;
+    }
 
     /**
      * Добавляет нового покупателя.
