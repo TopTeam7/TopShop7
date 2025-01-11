@@ -5,78 +5,88 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
+/**
+ * Главный контроллер для управления приложением.
+ */
 public class MainController {
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private boolean cycleProgram = true;
+    private final CustomerController customerController;
     private final OrderController orderController;
     private final ProductController productController;
+    private final Scanner scanner = new Scanner(System.in);
 
-    Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Конструктор для создания MainController.
+     *
+     * @param customerController контроллер для управления покупателями
+     * @param orderController    контроллер для управления заказами
+     * @param productController  контроллер для управления продуктами
+     */
     public MainController(CustomerController customerController, OrderController orderController, ProductController productController) {
+        this.customerController = customerController;
         this.orderController = orderController;
         this.productController = productController;
     }
 
     /**
-     * Метод не принимает параметры.
-     * Метод запускает главное меню программы
+     * Запускает главное меню программы.
      */
     public void start() {
         while (cycleProgram) {
-            System.out.println("1: управление покупателями");
-            System.out.println("2: управление продуктами");
-            System.out.println("3: управление заказами");
-            System.out.println("0: закрыть приложение ");
+            System.out.println("\nМеню:");
+            System.out.println("1. Управление покупателями");
+            System.out.println("2. Управление продуктами");
+            System.out.println("3. Управление заказами");
+            System.out.println("0. Выход из программы");
+            System.out.print("Выберите действие: ");
             int choice = scanner.nextInt();
+            scanner.nextLine();
+
             try {
                 switch (choice) {
                     case 1 -> startCustomer();
                     case 2 -> startProduct();
                     case 3 -> startOrder();
                     case 0 -> closeController();
-                    default -> log.info("Неверный выбор");
+                    default -> log.info("Неверный выбор. Попробуйте снова.");
                 }
             } catch (RuntimeException e) {
                 log.error("Ошибка: ", e);
+                System.out.println("Произошла ошибка: " + e.getMessage());
             }
         }
     }
 
     /**
-     * Метод не принимает параметры.
-     * Метод переходит в меню товары
+     * Переходит в меню управления покупателями.
+     */
+    private void startCustomer() {
+        log.info("Начало управления покупателями");
+        customerController.startCustomer();
+    }
+
+    /**
+     * Переходит в меню управления продуктами.
      */
     public void startProduct() {
         log.info("Начало управления продуктом");
         productController.startProduct(cycleProgram);
     }
-
     /**
-     * Метод не принимает параметры.
-     * Метод переходит в меню Заказ
+     * Переходит в меню управления заказами.
      */
-    public void startOrder() {
-        log.info("Управление начальными заказами");
+    private void startOrder() {
+        log.info("Начало управления заказами");
         orderController.startOrder(cycleProgram);
     }
 
     /**
-     * Метод не принимает параметры.
-     * Метод завершает работу программы
+     * Завершает работу программы.
      */
-    public void closeController() {
-        log.info("Закрытие программы");
+    private void closeController() {
+        log.info("Завершение работы программы");
         cycleProgram = false;
-    }
-
-    /**
-     * Метод не принимает параметры.
-     * Метод переходит в меню Покупатели
-     */
-    public void startCustomer() {
-        log.info("Начало работы с клиентами");
-        // Реализация для управления покупателями
     }
 }

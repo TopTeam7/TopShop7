@@ -1,33 +1,63 @@
 package org.example.Repository;
 
 import org.example.Model.Customer;
-import org.example.Model.CustomerType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Репозиторий для работы с покупателями.
+ * Класс для работы с хранилищем покупателей.
  */
 public class CustomerRepository {
-    private final String filePath = "src/main/resources/customers.txt";
-    private final String idFilePath = "src/main/resources/last_id.txt";
+    private static final Logger log = LoggerFactory.getLogger(CustomerRepository.class);
+    private static final String CUSTOMERS_FILE = "src/main/resources/customers.txt";
+    private static final String LAST_ID_FILE = "src/main/resources/last_id.txt";
 
     /**
-     * Загружает всех покупателей из файла.
+     * Загружает последний использованный ID из файла.
      *
-     * @return список покупателей.
+     * @return последний использованный ID
+     */
+    private int loadLastId() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LAST_ID_FILE))) {
+            String line = reader.readLine();
+            return line != null ? Integer.parseInt(line) : 0;
+        } catch (IOException e) {
+            log.error("Ошибка при чтении last_id.txt", e);
+            return 0;
+        }
+    }
+
+    /**
+     * Сохраняет последний использованный ID в файл.
+     *
+     * @param id последний использованный ID
+     */
+    private void saveLastId(int id) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LAST_ID_FILE))) {
+            writer.write(String.valueOf(id));
+        } catch (IOException e) {
+            log.error("Ошибка при записи last_id.txt", e);
+        }
+    }
+
+    /**
+     * Загружает список всех покупателей из файла.
+     *
+     * @return список покупателей
      */
     public List<Customer> loadCustomers() {
         List<Customer> customers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(CUSTOMERS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                customers.add(new Customer(line)); // Используем конструктор из строки
+                customers.add(new Customer(line));
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+            log.error("Ошибка при чтении customers.txt", e);
         }
         return customers;
     }
@@ -35,43 +65,31 @@ public class CustomerRepository {
     /**
      * Сохраняет список покупателей в файл.
      *
-     * @param customers список покупателей.
+     * @param customers список покупателей
      */
     public void saveCustomers(List<Customer> customers) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CUSTOMERS_FILE))) {
             for (Customer customer : customers) {
-                writer.write(customer.toString()); // Используем toString() для сохранения
+                writer.write(customer.toString());
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Ошибка при записи в файл: " + e.getMessage());
+            log.error("Ошибка при записи customers.txt", e);
         }
     }
 
     /**
-     * Генерирует новый уникальный ID.
+     * Добавляет нового покупателя в хранилище.
      *
-     * @return новый ID.
+     * @param customer объект покупателя
      */
-    public int generateNewId() {
-        int lastId = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(idFilePath))) {
-            String line = reader.readLine();
-            if (line != null) {
-                lastId = Integer.parseInt(line);
-            }
-        } catch (IOException e) {
-            System.err.println("Ошибка при чтении файла last_id.txt: " + e.getMessage());
-        }
-
-        lastId++;
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(idFilePath))) {
-            writer.write(String.valueOf(lastId));
-        } catch (IOException e) {
-            System.err.println("Ошибка при записи в файл last_id.txt: " + e.getMessage());
-        }
-
-        return lastId;
+    public void addCustomer(Customer customer) {
+        List<Customer> customers = loadCustomers();
+        int lastId = loadLastId();
+        customer = new Customer(lastId + 1, customer.getName(), customer.getType()); // Генерация нового ID
+        customers.add(customer);
+        saveCustomers(customers);
+        saveLastId(lastId + 1); // Сохраняем новый ID
+        log.info("Добавлен новый покупатель: {}", customer);
     }
 }
