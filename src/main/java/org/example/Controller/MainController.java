@@ -70,17 +70,16 @@ public class MainController {
     /**
      * Переходит в меню управления продуктами.
      */
-    private void startProduct() {
-        log.info("Начало управления продуктами");
-        productController.startProduct();
+    public void startProduct() {
+        log.info("Начало управления продуктом");
+        productController.startProduct(cycleProgram);
     }
-
     /**
      * Переходит в меню управления заказами.
      */
     private void startOrder() {
         log.info("Начало управления заказами");
-        orderController.startOrder();
+        orderController.startOrder(cycleProgram);
     }
 
     /**

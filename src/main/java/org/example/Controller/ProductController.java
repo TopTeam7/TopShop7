@@ -25,11 +25,8 @@ public class ProductController {
 
     /**
      * Метод принимает параметры
-     *
-     * @param isCycleProgram типа boolean
-     *                       Метод запускает взаимодействие с Product.
      */
-    public void startProduct(boolean isCycleProgram) {
+    public void startProduct(boolean isCycleProgram ) {
         cycleProductProgram = isCycleProgram;
         while (cycleProductProgram) {
             int choice;
