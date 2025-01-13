@@ -1,4 +1,5 @@
-package org.example.Repository;
+
+        package org.example.Repository;
 
 import org.example.Model.Customer;
 import org.slf4j.Logger;
@@ -8,18 +9,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Класс для работы с хранилищем покупателей.
- */
+/* Класс для работы с хранилищем покупателей.
+        */
 public class CustomerRepository {
     private static final Logger log = LoggerFactory.getLogger(CustomerRepository.class);
     private static final String CUSTOMERS_FILE = "src/main/resources/customers.txt";
     private static final String LAST_ID_FILE = "src/main/resources/last_id.txt";
 
-    /**
-     * Загружает последний использованный ID из файла.
-     *
-     * @return последний использованный ID
+    /* Загружает последний использованный ID из файла.
+            *
+            * @return последний использованный ID
      */
     private int loadLastId() {
         File file = new File(LAST_ID_FILE);
@@ -37,10 +36,9 @@ public class CustomerRepository {
         }
     }
 
-    /**
-     * Сохраняет последний использованный ID в файл.
-     *
-     * @param id последний использованный ID
+    /* Сохраняет последний использованный ID в файл.
+            *
+            * @param id последний использованный ID
      */
     private void saveLastId(int id) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LAST_ID_FILE))) {
@@ -50,10 +48,9 @@ public class CustomerRepository {
         }
     }
 
-    /**
-     * Загружает список всех покупателей из файла.
-     *
-     * @return список покупателей
+    /* Загружает список всех покупателей из файла.
+            *
+            * @return список покупателей
      */
     public List<Customer> loadCustomers() {
         List<Customer> customers = new ArrayList<>();
@@ -79,10 +76,9 @@ public class CustomerRepository {
         return customers;
     }
 
-    /**
-     * Сохраняет список покупателей в файл.
+    /* Сохраняет список покупателей в файл.
      *
-     * @param customers список покупателей
+             * @param customers список покупателей
      */
     public void saveCustomers(List<Customer> customers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CUSTOMERS_FILE))) {
@@ -95,10 +91,9 @@ public class CustomerRepository {
         }
     }
 
-    /**
-     * Добавляет нового покупателя в хранилище.
+    /* Добавляет нового покупателя в хранилище.
      *
-     * @param customer объект покупателя
+             * @param customer объект покупателя
      */
     public void addCustomer(Customer customer) {
         List<Customer> customers = loadCustomers();
@@ -109,6 +104,7 @@ public class CustomerRepository {
         saveLastId(lastId + 1);
         log.info("Добавлен новый покупатель: {}", customer);
     }
+
 
     /**
      * Удаляет покупателя по ID.
@@ -121,6 +117,7 @@ public class CustomerRepository {
         saveCustomers(customers);
         log.info("Покупатель с ID {} удален.", id);
     }
+
 
     /**
      * Обновляет данные покупателя.
