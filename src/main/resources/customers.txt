@@ -8,3 +8,6 @@
 8;Hank;VIP
 9;Ivy;REGULAR
 10;Jack;NEW
+11;Bob;NEW
+2;Bob;VIP
+3;Алеша;NEW

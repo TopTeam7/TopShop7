@@ -64,7 +64,7 @@ public class MainController {
      */
     private void startCustomer() {
         log.info("Начало управления покупателями");
-        customerController.startCustomer();
+        customerController.startCustomer(cycleProgram);
     }
 
     /**

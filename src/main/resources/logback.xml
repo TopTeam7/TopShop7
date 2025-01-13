@@ -1,4 +1,5 @@
 <configuration>
+    <!-- Консольный аппендер -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
@@ -7,7 +8,7 @@
         </encoder>
     </appender>
 
-
+    <!-- Файловый аппендер -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>application.log</file>
         <encoder>
@@ -15,8 +16,6 @@
                 %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
-
-
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>1kB</maxFileSize>
@@ -25,7 +24,7 @@
         </rollingPolicy>
     </appender>
 
-
+    <!-- Аппендер для ошибок -->
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/errors.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -41,6 +40,7 @@
         </filter>
     </appender>
 
+    <!-- Аппендер для предупреждений -->
     <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -51,7 +51,6 @@
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
-
         </filter>
     </appender>
 
@@ -63,7 +62,8 @@
         <appender-ref ref="WARN_FILE" />
     </logger>
 
-    <root level="trace">/ol
+    <!-- Корневой логгер -->
+    <root level="trace">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="ERROR_FILE"/>

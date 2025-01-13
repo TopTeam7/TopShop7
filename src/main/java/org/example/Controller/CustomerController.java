@@ -12,9 +12,11 @@ import java.util.Scanner;
  * Контроллер для управления покупателями.
  */
 public class CustomerController {
+
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
-    private final CustomerService customerService; // Убрана инициализация
+    private final CustomerService customerService;
     private final Scanner scanner = new Scanner(System.in);
+    private boolean cycleCustomerProgram = true;
 
     /**
      * Конструктор для создания CustomerController.
@@ -58,6 +60,54 @@ public class CustomerController {
         }
     }
 
-    public void startCustomer() {
+    /**
+     * Запускает меню управления покупателями.
+     */
+    public void startCustomer(boolean cycleProgram) {
+        cycleCustomerProgram = cycleProgram;
+        while (cycleCustomerProgram) {
+            System.out.println("\nМеню управления покупателями:");
+            System.out.println("1. Добавить покупателя");
+            System.out.println("2. Показать всех покупателей");
+            System.out.println("3. Найти покупателя по ID");
+            System.out.println("0. Вернуться в главное меню");
+            System.out.print("Выберите действие: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1 -> addCustomerMenu();
+                case 2 -> showAllCustomers();
+                case 3 -> findCustomerByIdMenu();
+                case 0 ->  back();
+                default -> System.out.println("Неверный выбор. Попробуйте снова.");
+            }
+        }
     }
+
+    /**
+     * Меню для добавления покупателя.
+     */
+    private void addCustomerMenu() {
+        System.out.print("Введите имя покупателя: ");
+        String name = scanner.nextLine();
+        System.out.print("Введите тип покупателя (NEW, REGULAR, VIP): ");
+        String type = scanner.nextLine();
+        addCustomer(name, type);
+    }
+
+    /**
+     * Меню для поиска покупателя по ID.
+     */
+    private void findCustomerByIdMenu() {
+        System.out.print("Введите ID покупателя: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        findCustomerById(id);
+    }
+    public void back() {
+        cycleCustomerProgram = false;
+    }
+
+
 }
