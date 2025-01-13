@@ -1,9 +1,6 @@
 package org.example.Repository;
 
 import org.example.Model.Order;
-import org.example.Model.OrderStatus;
-import org.example.Model.Product;
-import org.example.OrderException.CustomerNotFoundException;
 import org.example.OrderException.OrderNotFoundExcetion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,24 +8,17 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class OrderRepository {
-private static final Logger log = LoggerFactory.getLogger(OrderRepository.class);
-
+    private static final Logger log = LoggerFactory.getLogger(OrderRepository.class);
     String fileName = "orders.txt";
     String directory = "src/main/resources/";
-    Path filePath = Path.of(directory + fileName);
     String fileNameId = "ordersId.txt";
+    Path filePath = Path.of(directory + fileName);
     Path filePathID = Path.of(directory + fileNameId);
 
     private final List<Order> orders = new ArrayList<>();
@@ -46,7 +36,7 @@ private static final Logger log = LoggerFactory.getLogger(OrderRepository.class)
                 log.info("Создание файла с Id номерами");
             }
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             log.warn("Не удалось создать файлы");
         }
 
@@ -75,8 +65,8 @@ private static final Logger log = LoggerFactory.getLogger(OrderRepository.class)
             log.warn("Запись не удалась");
             throw new RuntimeException(e);
         }
-        orders.add(order);
         return order;
+
     }
 
     /**
@@ -101,14 +91,19 @@ private static final Logger log = LoggerFactory.getLogger(OrderRepository.class)
      *
      * @param orderId   типа int
      * @param newStatus типа String
-     *                  Метод достает заказ из листа по Id номеру меняет его статус
+     * Метод достает заказ из листа по Id номеру меняет его статус
      */
     public void changeStatusOrder(int orderId, String newStatus) {
         try {
             log.info("Изменение статуса заказа");
-            System.out.println(Files.readAllLines(filePath).get(orderId - 1) + "из файла изменениея");
-            orders.get(orderId - 1).setOrderStatus(newStatus);
-            log.info("Статус заказа изменен");
+            Order order = orders.stream()
+                    .filter(o -> o.getOrderId().equals(orderId))
+                    .findFirst()
+                    .orElse(null);
+            if (!(order == null)) {
+                order.setOrderStatus(newStatus);
+                loadToFileFromOrdersList(orders);
+            }
         } catch (IndexOutOfBoundsException | IOException e) {
             log.warn("Не удалось изменить статус заказа");
             throw new OrderNotFoundExcetion("Заказа с таким номером не существует");
@@ -119,26 +114,40 @@ private static final Logger log = LoggerFactory.getLogger(OrderRepository.class)
      * Метод принимает параметр
      *
      * @param id типа int
-     *           Метод возвращает заказ по номеру Id
+     *Метод возвращает заказ по номеру Id
      * @return Order
      */
-    public Order getOrderById(int id) {
+    public Order findOrderById(int id) {
 
-        List<Order> list = new ArrayList<>();
         log.info("Выгрузка списка заказов в лист");
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String fileOrders;
+            orders.clear();
+            log.info("Очистка листа перед выгрузкой заказов из файла");
             while ((fileOrders = reader.readLine()) != null) {
-                list.add(new Order(fileOrders));
+                orders.add(new Order(fileOrders));
             }
             log.info("Список заказов выгружен в лист");
-            return list.stream()
+            return orders.stream()
                     .filter(order -> order.getOrderId().equals(id))
                     .findFirst()
                     .orElse(null);
-        } catch (IOException | NullPointerException| CustomerNotFoundException e) {
+        } catch (IOException | NullPointerException e) {
             log.warn("Не удалось выгрузить срисок заказов в лист");
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Метод очищает файл от старых записей и записывает в файл обнавленные заказы
+      * Метод принимает лист заказов @ List<Order>
+     *
+     */
+    public void loadToFileFromOrdersList(List<Order> orders) throws IOException {
+        log.info("Загрузка изменений в файл");
+        Files.write(filePath, "".getBytes());
+        for (Order order : orders) {
+            Files.write(filePath, order.toString().getBytes(), StandardOpenOption.APPEND);
         }
     }
 }

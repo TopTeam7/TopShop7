@@ -35,12 +35,12 @@ public class MainController {
      */
     public void start() {
         while (cycleProgram) {
-            System.out.println("\nМеню:");
+            System.out.println("\"===== Главное меню =====\"");
             System.out.println("1. Управление покупателями");
             System.out.println("2. Управление продуктами");
             System.out.println("3. Управление заказами");
             System.out.println("0. Выход из программы");
-            System.out.print("Выберите действие: ");
+            System.out.println("Выберите действие:");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -64,7 +64,7 @@ public class MainController {
      */
     private void startCustomer() {
         log.info("Начало управления покупателями");
-        customerController.startCustomer();
+        customerController.startCustomer(cycleProgram);
     }
 
     /**
