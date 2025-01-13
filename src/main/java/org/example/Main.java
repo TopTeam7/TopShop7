@@ -14,12 +14,16 @@ import org.example.Service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* Главный класс приложения.
+
+/**
+ * Главный класс приложения.
  */
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-    /* Точка входа в приложение.
+
+    /**
+     * Точка входа в приложение.
      *
      * @param args аргументы командной строки
      */

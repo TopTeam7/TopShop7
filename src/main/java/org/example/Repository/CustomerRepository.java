@@ -106,9 +106,10 @@ public class CustomerRepository {
     }
 
 
-            /* Удаляет покупателя по ID.
-            *
-            * @param id идентификатор покупателя
+    /**
+     * Удаляет покупателя по ID.
+     *
+     * @param id идентификатор покупателя
      */
     public void deleteCustomer(int id) {
         List<Customer> customers = loadCustomers();
@@ -117,9 +118,11 @@ public class CustomerRepository {
         log.info("Покупатель с ID {} удален.", id);
     }
 
-    /* Обновляет данные покупателя.
+
+    /**
+     * Обновляет данные покупателя.
      *
-             * @param updatedCustomer объект покупателя с обновленными данными
+     * @param updatedCustomer объект покупателя с обновленными данными
      */
     public void updateCustomer(Customer updatedCustomer) {
         List<Customer> customers = loadCustomers();
