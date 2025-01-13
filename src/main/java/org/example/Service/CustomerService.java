@@ -1,9 +1,9 @@
 package org.example.Service;
 
-import org.example.exception.CustomerNotFoundException;
 import org.example.Model.Customer;
 import org.example.Model.CustomerType;
 import org.example.Repository.CustomerRepository;
+import org.example.exception.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +32,8 @@ public class CustomerService {
      * @param type тип покупателя
      */
     public void addCustomer(String name, String type) {
-        Customer customer = new Customer(0, name, CustomerType.valueOf(type)); // Используем CustomerType
-        repository.addCustomer(customer); // Исправлено: передаем объект customer
+        Customer customer = new Customer(0, name, CustomerType.valueOf(type));
+        repository.addCustomer(customer);
     }
 
     /**
@@ -60,5 +60,30 @@ public class CustomerService {
                     log.warn("Покупатель с ID {} не найден", id);
                     return new CustomerNotFoundException("Покупатель с ID " + id + " не найден.");
                 });
+    }
+
+    /**
+     * Удаляет покупателя по ID.
+     *
+     * @param id идентификатор покупателя
+     * @throws CustomerNotFoundException если покупатель не найден
+     */
+    public void deleteCustomer(int id) throws CustomerNotFoundException {
+        Customer customer = findCustomerById(id);
+        repository.deleteCustomer(id);
+    }
+
+    /**
+     * Обновляет данные покупателя.
+     *
+     * @param id   идентификатор покупателя
+     * @param name новое имя покупателя
+     * @param type новый тип покупателя
+     * @throws CustomerNotFoundException если покупатель не найден
+     */
+    public void updateCustomer(int id, String name, String type) throws CustomerNotFoundException {
+        Customer customer = findCustomerById(id);
+        Customer updatedCustomer = new Customer(id, name, CustomerType.valueOf(type));
+        repository.updateCustomer(updatedCustomer);
     }
 }
