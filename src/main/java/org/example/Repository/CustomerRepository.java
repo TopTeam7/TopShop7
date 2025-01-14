@@ -16,7 +16,7 @@ public class CustomerRepository {
     private static final String CUSTOMERS_FILE = "src/main/resources/customers.txt";
     private static final String LAST_ID_FILE = "src/main/resources/last_id.txt";
 
-    /* Загружает последний использованный ID из файла.
+    /** Загружает последний использованный ID из файла.
             *
             * @return последний использованный ID
      */
@@ -36,7 +36,7 @@ public class CustomerRepository {
         }
     }
 
-    /* Сохраняет последний использованный ID в файл.
+    /** Сохраняет последний использованный ID в файл.
             *
             * @param id последний использованный ID
      */
@@ -48,7 +48,7 @@ public class CustomerRepository {
         }
     }
 
-    /* Загружает список всех покупателей из файла.
+    /** Загружает список всех покупателей из файла.
             *
             * @return список покупателей
      */
@@ -76,7 +76,7 @@ public class CustomerRepository {
         return customers;
     }
 
-    /* Сохраняет список покупателей в файл.
+    /** Сохраняет список покупателей в файл.
      *
              * @param customers список покупателей
      */
@@ -91,7 +91,7 @@ public class CustomerRepository {
         }
     }
 
-    /* Добавляет нового покупателя в хранилище.
+    /** Добавляет нового покупателя в хранилище.
      *
              * @param customer объект покупателя
      */
@@ -106,7 +106,7 @@ public class CustomerRepository {
     }
 
 
-            /* Удаляет покупателя по ID.
+            /** Удаляет покупателя по ID.
             *
             * @param id идентификатор покупателя
      */
@@ -117,7 +117,7 @@ public class CustomerRepository {
         log.info("Покупатель с ID {} удален.", id);
     }
 
-    /* Обновляет данные покупателя.
+    /** Обновляет данные покупателя.
      *
              * @param updatedCustomer объект покупателя с обновленными данными
      */

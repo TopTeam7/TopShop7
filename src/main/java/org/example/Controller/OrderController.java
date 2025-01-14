@@ -8,7 +8,6 @@ import org.example.Service.OrderService;
 import org.example.Service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Scanner;
 
 public class OrderController {
@@ -21,7 +20,8 @@ public class OrderController {
     private OrderStatus newStatus;
     private final CustomerService customerService;
     private final ProductService productService;
-private boolean cycle;
+    private boolean cycle;
+
     public OrderController(OrderService orderService, CustomerService customerService, ProductService productService) {
         this.orderService = orderService;
         this.customerService = customerService;
@@ -60,51 +60,14 @@ private boolean cycle;
      * Метод не ринимает параметры.
      * Метод создает новый заказ.
      */
-    public void addOrder() {
+    public void addOrder() throws org.example.exception.CustomerNotFoundException {
 
         log.info("Добавление заказа");
-        System.out.println("Введите ID покупателя");
 
-        int customerId = sc.nextInt();
-        String[] customId = customerService.findCustomerById(customerId).toString().split(";");
-
-        System.out.println("Введите статус заказа \n 1: New\n 2: Process\n 3: Completed\n 4: Canceled");
-        int orderStatusValue = sc.nextInt();
-
-        log.info("Выбор стстуса заказа");
-        switch (orderStatusValue) {
-
-            case 1 -> orderStatus = String.valueOf(OrderStatus.NEW);
-            case 2 -> orderStatus = String.valueOf(OrderStatus.PROCESS);
-            case 3 -> orderStatus = String.valueOf(OrderStatus.COMPLETED);
-            case 4 -> orderStatus = String.valueOf(OrderStatus.CANCELED);
-            default -> System.out.println("Введите корректный номер");
-        }
-
-        int i = 0;
-        int[] prodId = new int[10];
-        do {
-
-            prodId[i] = findProductId();
-            System.out.println("Добавить еще продукт в заказ?");
-            System.out.println("1: Да\n");
-            System.out.println("0: Нет\n");
-            int choice = sc.nextInt();
-            if (choice == 1) {
-                cycle = true;
-            } else {
-                cycle = false;
-            }
-        } while (cycle); {
-
-            prodId[i] = findProductId();
-            System.out.println("Добавить еще продукт в заказ?");
-            System.out.println("1: Да\n");
-            System.out.println("0: Нет\n");
-            cycle = sc.nextInt() == 1;
-
-        }
-        String orderView = orderService.addOrder(Integer.parseInt(customId[0]), orderStatus, prodId).toString();
+        int customId = findCustomerById();
+        setOrderStatus();
+        String strProdId = addProductToOrder().toString();
+        String orderView = orderService.addOrder(customId, orderStatus, strProdId).toString();
         log.info("Добавлен заказ {}", orderView);
 
     }
@@ -148,6 +111,19 @@ private boolean cycle;
     }
 
     /**
+     * Метод ищет покупателя по Id
+     * Метод возвращает Id номер покупателя
+     *
+     * @return int
+     */
+    public int findCustomerById() {
+        System.out.println("Введите ID покупателя");
+        int customerId = sc.nextInt();
+        String[] customId = customerService.findCustomerById(customerId).toString().split(";");
+        return Integer.parseInt(customId[0]);
+    }
+
+    /**
      * Метод не принимает параметры.
      * Метод в консоль заказ по ID
      */
@@ -159,11 +135,72 @@ private boolean cycle;
         System.out.println(orderService.findOrderById(id));
     }
 
+    /**Метод находит продукт по ID.
+     *Метод возвращает Id  продукта
+     * @return int
+     */
     public int findProductId() {
         System.out.println("Введите ID продукта");
         int productId = sc.nextInt();
         String[] stringProductId = productService.getProduct(productId).toString().split(";");
         return Integer.parseInt(stringProductId[0]);
+    }
+
+    /**
+     * Метод выбыра стстуса заказа
+     * Метод ничего не возвращает
+      */
+    public void setOrderStatus() {
+        System.out.println("Введите статус заказа \n 1: New\n 2: Process\n 3: Completed\n 4: Canceled");
+        int orderStatusValue = sc.nextInt();
+
+        log.info("Выбор стстуса заказа");
+
+        switch (orderStatusValue) {
+
+            case 1 -> orderStatus = String.valueOf(OrderStatus.NEW);
+            case 2 -> orderStatus = String.valueOf(OrderStatus.PROCESS);
+            case 3 -> orderStatus = String.valueOf(OrderStatus.COMPLETED);
+            case 4 -> orderStatus = String.valueOf(OrderStatus.CANCELED);
+            default -> System.out.println("Введите корректный номер");
+        }
+    }
+
+    /**
+     * Метод добавления ID продукта в заказ
+     * @return StringBuilder.
+     */
+    public StringBuilder addProductToOrder() {
+        int i = 0;
+        int[] prodId = new int[10];
+        do {
+            prodId[i] = findProductId();
+            System.out.println("Добавить еще продукт в заказ?");
+            System.out.println("1: Да\n");
+            System.out.println("0: Нет\n");
+            int choice = sc.nextInt();
+            if (choice == 1) {
+                cycle = true;
+                i++;
+            } else {
+                cycle = false;
+            }
+        } while (cycle);
+        {
+        }
+        StringBuilder strProdId = new StringBuilder();
+        for (int i1 : prodId) {
+            if (i1 > 0) {
+                if (!strProdId.isEmpty()) {
+                    strProdId = new StringBuilder(strProdId + "," + i1);
+                } else {
+                    strProdId = new StringBuilder(strProdId + String.valueOf(i1));
+                }
+            } else {
+                break;
+            }
+        }
+        return strProdId;
     }
 
     /**

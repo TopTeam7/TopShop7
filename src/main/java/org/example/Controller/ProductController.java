@@ -32,7 +32,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    /* Метод для запуска программы управления товарами
+    /** Метод для запуска программы управления товарами
      *
      * @param isCycleProgram флаг для управления циклом программы
      */
@@ -99,7 +99,7 @@ public class ProductController {
     }
 
 
-    /* Метод для отображения всех доступных товаров
+    /** Метод для отображения всех доступных товаров
      */
     private void getProduct() {
         String product = productService.getAll().toString(); // Получение всех продуктов
@@ -107,7 +107,7 @@ public class ProductController {
         System.out.println(product); // Вывод всех продуктов на экран
     }
 
-    /* Метод для поиска товара по ID
+    /** Метод для поиска товара по ID
      */
     private void findProduct() {
         Integer findID;

@@ -2,9 +2,6 @@ package org.example.Service;
 
 import org.example.Model.Order;
 import org.example.Repository.OrderRepository;
-
-
-import java.util.Arrays;
 import java.util.List;
 
 public class OrderService {
@@ -23,9 +20,8 @@ public class OrderService {
      *                    Метод создает новый заказ
      * @return объект типа Order
      */
-    public Order addOrder(int customerId, String orderStatus, int[] productId) {
+    public Order addOrder(int customerId, String orderStatus, String productId) {
         Order newOrder = new Order(null, customerId, orderStatus, productId);
-        System.out.println(newOrder);
         return orderRepository.saveOrder(newOrder);
     }
 

@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-/* Класс, содержащий бизнес-логику для работы с покупателями.
+/** Класс, содержащий бизнес-логику для работы с покупателями.
  */
 public class CustomerService {
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
     private final CustomerRepository repository;
 
-    /* Конструктор для создания CustomerService.
+    /** Конструктор для создания CustomerService.
             *
             * @param repository репозиторий для работы с покупателями
      */
@@ -23,7 +23,7 @@ public class CustomerService {
         this.repository = repository;
     }
 
-    /* Добавляет нового покупателя.
+    /** Добавляет нового покупателя.
      *
              * @param name имя покупателя
      * @param type тип покупателя
@@ -33,7 +33,7 @@ public class CustomerService {
         repository.addCustomer(customer);
     }
 
-    /* Возвращает список всех покупателей.
+    /** Возвращает список всех покупателей.
             *
             * @return список покупателей
      */
@@ -41,7 +41,7 @@ public class CustomerService {
         return repository.loadCustomers();
     }
 
-    /* Находит покупателя по ID.
+    /** Находит покупателя по ID.
             *
             * @param id идентификатор покупателя
      * @return найденный покупатель
@@ -57,7 +57,7 @@ public class CustomerService {
                 });
     }
 
-    /* Удаляет покупателя по ID.
+    /** Удаляет покупателя по ID.
             *
             * @param id идентификатор покупателя
      * @throws CustomerNotFoundException если покупатель не найден

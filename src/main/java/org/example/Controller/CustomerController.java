@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Scanner;
 
-/* Контроллер для управления покупателями.
+/** Контроллер для управления покупателями.
         */
 public class CustomerController {
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -19,7 +19,7 @@ public class CustomerController {
     private final Scanner scanner = new Scanner(System.in);
     private boolean cycleCustomerProgram = true;
 
-    /* Конструктор для создания CustomerController.
+    /** Конструктор для создания CustomerController.
             *
             * @param customerService сервис для работы с покупателями
      */
@@ -27,7 +27,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    /* Запускает меню управления покупателями.
+    /** Запускает меню управления покупателями.
             *
             * @param cycleProgram флаг для управления циклом программы
      */
@@ -57,7 +57,7 @@ public class CustomerController {
         }
     }
 
-    /* Меню для добавления покупателя.
+    /** Меню для добавления покупателя.
             */
     private void addCustomerMenu() {
         System.out.print("Введите имя покупателя: ");
@@ -78,14 +78,14 @@ public class CustomerController {
         }
     }
 
-    /* Показывает список всех покупателей.
+    /**Показывает список всех покупателей.
             */
     private void showAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         customers.forEach(System.out::println);
     }
 
-    /* Меню для поиска покупателя по ID.
+    /** Меню для поиска покупателя по ID.
             */
     private void findCustomerByIdMenu() {
         System.out.print("Введите ID покупателя: ");
@@ -100,7 +100,7 @@ public class CustomerController {
     }
 
 
-            /* Меню для удаления покупателя по ID.
+            /** Меню для удаления покупателя по ID.
             */
     private void deleteCustomerMenu() {
         System.out.print("Введите ID покупателя для удаления: ");
@@ -114,7 +114,7 @@ public class CustomerController {
         }
     }
 
-    /* Меню для редактирования покупателя.
+    /** Меню для редактирования покупателя.
             */
     private void updateCustomerMenu() {
         System.out.print("Введите ID покупателя для редактирования: ");

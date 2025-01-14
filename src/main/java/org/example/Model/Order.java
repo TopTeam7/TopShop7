@@ -2,8 +2,6 @@ package org.example.Model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Order {
@@ -13,12 +11,12 @@ public class Order {
     private String productId;
     private String orderStatus;
 
-    public Order(Integer orderId, int customerId, String orderStatus, int [] productId) {
+    public Order(Integer orderId, int customerId, String orderStatus, String productId) {
         log.info("Создание заказа");
         this.orderId = orderId;
         this.customerId = customerId;
         this.orderStatus = orderStatus;
-        this.productId = Arrays.toString(productId);
+        this.productId = productId;
 
     }
 
@@ -56,7 +54,7 @@ public class Order {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Order order = (Order) object;
-        return customerId == order.customerId && productId == order.productId
+        return customerId == order.customerId && productId.equals(order.productId)
                 && Objects.equals(orderId, order.orderId)
                 && Objects.equals(orderStatus, order.orderStatus);
     }
