@@ -40,7 +40,7 @@ public class ProductRepository {
         }
     }
 
-    /* Загружает все продукты из файла.
+    /** Загружает все продукты из файла.
      *
              * @return список продуктов.
             */
@@ -58,7 +58,7 @@ public class ProductRepository {
         return products; // Возврат списка продуктов
     }
 
-    /* Сохраняет список продуктов в файл.
+    /** Сохраняет список продуктов в файл.
      *
              * @param products список продуктов.
      */
@@ -75,7 +75,7 @@ public class ProductRepository {
     }
 
 
-            /* Генерирует новый уникальный ID.
+            /** Генерирует новый уникальный ID.
             *
             * @return новый ID.
             */
@@ -100,7 +100,7 @@ public class ProductRepository {
         return lastId; // Возврат нового ID
     }
 
-    /* Сохраняет продукт в файл.
+    /** Сохраняет продукт в файл.
             *
             * @param product продукт для сохранения.
             * @return сохраненный продукт.
@@ -113,7 +113,7 @@ public class ProductRepository {
         return product; // Возврат сохраненного продукта
     }
 
-    /* Находит продукт по ID.
+    /** Находит продукт по ID.
             *
             * @param id ID продукта.
      * @return найденный продукт.
@@ -127,7 +127,7 @@ public class ProductRepository {
                 .orElseThrow(() -> new ProductNotFoundException("Продукт с ID " + id + " не найден")); // Выброс исключения, если продукт не найден
     }
 
-    /* Возвращает все продукты.
+    /** Возвращает все продукты.
      *
              * @return список всех продуктов.
      */
