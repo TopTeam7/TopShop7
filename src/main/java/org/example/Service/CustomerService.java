@@ -57,9 +57,10 @@ public class CustomerService {
                 });
     }
 
-    /** Удаляет покупателя по ID.
-            *
-            * @param id идентификатор покупателя
+    /**
+     * Удаляет покупателя по ID.
+     *
+     * @param id идентификатор покупателя
      * @throws CustomerNotFoundException если покупатель не найден
      */
     public void deleteCustomer(int id) throws CustomerNotFoundException {

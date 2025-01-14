@@ -7,6 +7,7 @@
 8;Hank;VIP
 9;Ivy;REGULAR
 10;Jack;NEW
-3;2;VIP
-4;ваыв;VIP
-5;John;VIP
+11;Bob;NEW
+2;Bob;VIP
+3;Алеша;NEW
+
