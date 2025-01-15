@@ -1,13 +1,25 @@
 package org.example.Model;
-
-/**
- * Перечисление, представляющее тип покупателя.
- */
 public enum CustomerType {
-    /** Новый покупатель */
-    NEW,
-    /** Постоянный покупатель */
-    REGULAR,
-    /** VIP покупатель */
-    VIP
+    НОВЫЙ("Новый"),
+    ПОСТОЯННЫЙ("Постоянный"),
+    VIP("VIP");
+
+    private final String displayName;
+
+    CustomerType(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static CustomerType fromString(String value) {
+        for (CustomerType type : CustomerType.values()) {
+            if (type.displayName.equalsIgnoreCase(value)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Неверный тип покупателя: " + value);
+    }
 }

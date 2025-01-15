@@ -62,7 +62,7 @@ public class CustomerController {
     /**
      * Меню для добавления покупателя.
      */
-    private void addCustomerMenu() {
+    void addCustomerMenu() {
         System.out.print("Введите имя покупателя: ");
         String name = scanner.nextLine().trim();
         if (name.isEmpty()) {
@@ -84,7 +84,7 @@ public class CustomerController {
     /**
      * Показывает список всех покупателей.
      */
-    private void showAllCustomers() {
+    void showAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         customers.forEach(System.out::println);
     }
@@ -92,7 +92,7 @@ public class CustomerController {
     /**
      * Меню для поиска покупателя по ID.
      */
-    private void findCustomerByIdMenu() {
+    void findCustomerByIdMenu() {
         System.out.print("Введите ID покупателя: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -107,7 +107,7 @@ public class CustomerController {
     /**
      * Меню для удаления покупателя по ID.
      */
-    private void deleteCustomerMenu() {
+    void deleteCustomerMenu() {
         System.out.print("Введите ID покупателя для удаления: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -122,7 +122,7 @@ public class CustomerController {
     /**
      * Меню для редактирования покупателя.
      */
-    private void updateCustomerMenu() {
+    void updateCustomerMenu() {
         System.out.print("Введите ID покупателя для редактирования: ");
         int id = scanner.nextInt();
         scanner.nextLine();

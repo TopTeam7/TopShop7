@@ -2,35 +2,24 @@ package org.example.Model;
 
 /**
  * Класс, представляющий покупателя.
+ * Содержит информацию о покупателе: идентификатор, имя и тип.
  */
 public class Customer {
-    private int id;
-    private String name;
-    private CustomerType type;
+    private final int id;
+    private final String name;
+    private final CustomerType type;
 
     /**
      * Конструктор для создания объекта покупателя.
      *
      * @param id   уникальный идентификатор покупателя
      * @param name имя покупателя
-     * @param type тип покупателя
+     * @param type тип покупателя (NEW, REGULAR, VIP)
      */
     public Customer(int id, String name, CustomerType type) {
         this.id = id;
         this.name = name;
         this.type = type;
-    }
-
-    /**
-     * Конструктор для создания объекта покупателя из строки.
-     *
-     * @param data строка, содержащая данные о покупателе (id;name;type)
-     */
-    public Customer(String data) {
-        String[] parts = data.split(";");
-        this.id = Integer.parseInt(parts[0]);
-        this.name = parts[1];
-        this.type = CustomerType.valueOf(parts[2]);
     }
 
     /**
@@ -54,16 +43,17 @@ public class Customer {
     /**
      * Возвращает тип покупателя.
      *
-     * @return тип покупателя
+     * @return тип покупателя (NEW, REGULAR, VIP)
      */
     public CustomerType getType() {
         return type;
     }
 
     /**
-     * Преобразует объект покупателя в строку для сохранения в файл.
+     * Возвращает строковое представление объекта покупателя.
+     * Формат: "id;name;type".
      *
-     * @return строка в формате "id;name;type"
+     * @return строковое представление покупателя
      */
     @Override
     public String toString() {
