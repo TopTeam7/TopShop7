@@ -1,3 +1,4 @@
+
 package org.example;
 
 import org.example.Controller.CustomerController;
@@ -13,11 +14,13 @@ import org.example.Service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * Главный класс приложения.
  */
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
+
 
     /**
      * Точка входа в приложение.
@@ -39,7 +42,7 @@ public class Main {
 
         // Инициализация контроллеров
         CustomerController customerController = new CustomerController(customerService);
-        OrderController orderController = new OrderController(orderService);
+        OrderController orderController = new OrderController(orderService, customerService, productService);
         ProductController productController = new ProductController(productService);
 
         // Запуск главного контроллера

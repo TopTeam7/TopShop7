@@ -1,20 +1,39 @@
 package org.example.Model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Objects;
 
 public class Order {
+    private static final Logger log = LoggerFactory.getLogger(Order.class);
     private Integer orderId;
-    private int buyerId;
-    private int productId;
+    private int customerId;
+    private String productId;
     private String orderStatus;
 
-    public Order(Integer orderId, int buyerId,String orderStatus,int productId) {
+    public Order(Integer orderId, int customerId, String orderStatus, String productId) {
+        log.info("Создание заказа");
         this.orderId = orderId;
-        this.buyerId = buyerId;
-
-        this.productId = productId;
+        this.customerId = customerId;
         this.orderStatus = orderStatus;
+        this.productId = productId;
+
     }
+
+    public Order(String OrderFromFile) {
+        try {
+            log.info("Получение заказа из файла");
+            String[] arrayFromFile = OrderFromFile.split(";");
+            this.orderId = Integer.parseInt(arrayFromFile[0]);
+            this.customerId = Integer.parseInt(arrayFromFile[1]);
+            this.productId = arrayFromFile[2];
+            this.orderStatus = arrayFromFile[3];
+        } catch (NullPointerException e) {
+            log.error("Заказ из файла не получен");
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public Integer getOrderId() {
         return orderId;
@@ -22,27 +41,9 @@ public class Order {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+
     }
 
-    public int getBuyerId() {
-        return buyerId;
-    }
-
-    public void setBuyerId(int buyerId) {
-        this.buyerId = buyerId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
@@ -53,21 +54,23 @@ public class Order {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Order order = (Order) object;
-        return buyerId == order.buyerId && productId == order.productId
+        return customerId == order.customerId && productId.equals(order.productId)
                 && Objects.equals(orderId, order.orderId)
                 && Objects.equals(orderStatus, order.orderStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, buyerId, productId, orderStatus);
+        return Objects.hash(orderId, customerId, productId, orderStatus);
     }
 
     @Override
     public String toString() {
-        return "ID Заказа =" + orderId +
-                ", Id Покупателя=" + buyerId +
-                ", Id продукта =" + productId +
-                ", Статус заказа ='" + orderStatus;
+        return orderId +
+                ";" + customerId +
+                ";" + productId +
+                ";" + orderStatus + "\n";
     }
+
+
 }

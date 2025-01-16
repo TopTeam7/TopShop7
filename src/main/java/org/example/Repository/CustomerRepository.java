@@ -13,8 +13,6 @@ import java.util.List;
 
 /**
  * Класс для работы с хранилищем покупателей.
- * Обеспечивает загрузку, сохранение, добавление, удаление и обновление данных о покупателях.
- * Данные хранятся в текстовых файлах: customers.txt (список покупателей) и last_id.txt (последний использованный ID).
  */
 public class CustomerRepository {
     private static final Logger log = LoggerFactory.getLogger(CustomerRepository.class);
@@ -30,8 +28,7 @@ public class CustomerRepository {
         }
 
     /**
-     * Загружает последний использованный ID из файла last_id.txt.
-     * Если файл не существует, создает его и возвращает 0.
+     * Загружает последний использованный ID из файла.
      *
      * @return последний использованный ID
      */
@@ -52,7 +49,7 @@ public class CustomerRepository {
     }
 
     /**
-     * Сохраняет последний использованный ID в файл last_id.txt.
+     * Сохраняет последний использованный ID в файл.
      *
      * @param id последний использованный ID
      */
