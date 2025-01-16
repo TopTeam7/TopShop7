@@ -42,7 +42,7 @@ public class Main {
 
         // Инициализация контроллеров
         CustomerController customerController = new CustomerController(customerService);
-        OrderController orderController = new OrderController(orderService,customerService,productService);
+        OrderController orderController = new OrderController(orderService, customerService, productService);
         ProductController productController = new ProductController(productService);
 
         // Запуск главного контроллера

@@ -1,5 +1,5 @@
 
-        package org.example.Repository;
+package org.example.Repository;
 
 import org.example.Model.Product;
 import org.example.OrderException.ProductNotFoundException;
@@ -24,8 +24,10 @@ public class ProductRepository {
     public ProductRepository(String filePath, String idFilePath) {
         this.filePath = Path.of(filePath); // Инициализация пути к файлу продуктов
         this.idFilePath = Path.of(idFilePath); // Инициализация пути к файлу ID
+/**
+ * Проверка и создание файлов, если они не существуют
+ */
 
-        // Проверка и создание файлов, если они не существуют
         try {
             if (Files.notExists(this.filePath)) {
                 Files.createFile(this.filePath);
@@ -40,10 +42,11 @@ public class ProductRepository {
         }
     }
 
-    /* Загружает все продукты из файла.
+    /**
+     * Загружает все продукты из файла.
      *
-             * @return список продуктов.
-            */
+     * @return список продуктов.
+     */
     public List<Product> loadProducts() {
         List<Product> products = new ArrayList<>(); // Создание списка для хранения продуктов
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
@@ -58,9 +61,10 @@ public class ProductRepository {
         return products; // Возврат списка продуктов
     }
 
-    /* Сохраняет список продуктов в файл.
+    /**
+     * Сохраняет список продуктов в файл.
      *
-             * @param products список продуктов.
+     * @param products список продуктов.
      */
     public void saveProducts(List<Product> products) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
@@ -75,10 +79,11 @@ public class ProductRepository {
     }
 
 
-            /* Генерирует новый уникальный ID.
-            *
-            * @return новый ID.
-            */
+    /**
+     * Генерирует новый уникальный ID.
+     *
+     * @return новый ID.
+     */
     public int generateNewId() {
         int lastId = 0; // Переменная для хранения последнего ID
         try (BufferedReader reader = new BufferedReader(new FileReader(idFilePath.toFile()))) {
@@ -100,11 +105,12 @@ public class ProductRepository {
         return lastId; // Возврат нового ID
     }
 
-    /* Сохраняет продукт в файл.
-            *
-            * @param product продукт для сохранения.
-            * @return сохраненный продукт.
-            */
+    /**
+     * Сохраняет продукт в файл.
+     *
+     * @param product продукт для сохранения.
+     * @return сохраненный продукт.
+     */
     public Product save(Product product) {
         List<Product> products = loadProducts(); // Загрузка всех продуктов
         product.setId(generateNewId()); // Генерация нового ID для продукта
@@ -113,11 +119,12 @@ public class ProductRepository {
         return product; // Возврат сохраненного продукта
     }
 
-    /* Находит продукт по ID.
-            *
-            * @param id ID продукта.
+    /**
+     * Находит продукт по ID.
+     *
+     * @param id ID продукта.
      * @return найденный продукт.
-            * @throws ProductNotFoundException если продукт не найден.
+     * @throws ProductNotFoundException если продукт не найден.
      */
     public Product findById(int id) {
         List<Product> products = loadProducts(); // Загрузка всех продуктов
@@ -127,9 +134,10 @@ public class ProductRepository {
                 .orElseThrow(() -> new ProductNotFoundException("Продукт с ID " + id + " не найден")); // Выброс исключения, если продукт не найден
     }
 
-    /* Возвращает все продукты.
+    /**
+     * Возвращает все продукты.
      *
-             * @return список всех продуктов.
+     * @return список всех продуктов.
      */
     public List<Product> findAll() {
         return loadProducts(); // Загрузка и возврат всех продуктов
