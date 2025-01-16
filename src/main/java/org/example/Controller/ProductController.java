@@ -1,5 +1,5 @@
-
 package org.example.Controller;
+
 
 import org.example.Model.ProductCategory;
 import org.example.OrderException.ProductNotFoundException;
@@ -10,29 +10,41 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 public class ProductController {
-    // Логгер для логирования событий
+    /**
+     * Логгер для логирования событий
+     */
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
-
-    // Сервис для работы с продуктами
+    /**
+     * Сервис для работы с продуктами
+     */
     private final ProductService productService;
-
-    // Флаг для управления циклом программы
+    /**
+     * Флаг для управления циклом программы
+     */
     private boolean cycleProductProgram = true;
-
-    // Сканер для ввода данных с консоли
+    /**
+     * Сканер для ввода данных с консоли
+     */
     private Scanner sc = new Scanner(System.in);
+    /**
+     * Поля для хранения данных о продукте
+     */
 
-    // Поля для хранения данных о продукте
     private String productTitle;
     private int productPrice;
     private String productCategory;
 
-    // Конструктор класса ProductController
+    /**
+     * Конструктор класса ProductController
+     *
+     * @param productService
+     */
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    /** Метод для запуска программы управления товарами
+    /**
+     * Метод для запуска программы управления товарами
      *
      * @param isCycleProgram флаг для управления циклом программы
      */
@@ -63,7 +75,8 @@ public class ProductController {
         }
     }
 
-    /* Метод для добавления нового продукта
+    /**
+     * Метод для добавления нового продукта
      */
     private void addProduct() {
         int categoryNum = 0;
@@ -81,7 +94,10 @@ public class ProductController {
         System.out.println("3. " + ProductCategory.CLOTHING.getProductCategory());
         categoryNum = sc.nextInt();
 
-        // Определение категории товара
+
+        /**
+         *  Определение категории товара
+         */
         switch (categoryNum) {
             case 1 -> productCategory = ProductCategory.FOOD.getProductCategory();
             case 2 -> productCategory = ProductCategory.ELECTRONICS.getProductCategory();
@@ -99,7 +115,9 @@ public class ProductController {
     }
 
 
-    /** Метод для отображения всех доступных товаров
+    /**
+     * Метод для отображения всех доступных товаров
+
      */
     private void getProduct() {
         String product = productService.getAll().toString(); // Получение всех продуктов
@@ -107,7 +125,8 @@ public class ProductController {
         System.out.println(product); // Вывод всех продуктов на экран
     }
 
-    /** Метод для поиска товара по ID
+    /**
+     * Метод для поиска товара по ID
      */
     private void findProduct() {
         Integer findID;

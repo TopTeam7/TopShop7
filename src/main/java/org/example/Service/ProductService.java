@@ -9,18 +9,31 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class ProductService {
-    // Логгер для логирования событий
-    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+    /**
+     * Логгер для логирования событий
+     */
 
-    // Репозиторий для работы с продуктами
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+    /**
+     * Репозиторий для работы с продуктами
+     */
+
     private final ProductRepository productRepository;
 
-    // Конструктор класса ProductService
+    /**
+     * Конструктор класса ProductService
+     *
+     * @param productRepository
+     */
+
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    /** Метод для добавления нового продукта
+
+    /**
+     * Метод для добавления нового продукта
+
      *
      * @param title    название продукта
      * @param price    цена продукта
@@ -33,7 +46,9 @@ public class ProductService {
         return productRepository.save(newProduct); // Сохранение продукта в репозитории
     }
 
-    /** Метод для получения всех продуктов
+
+    /**
+     * Метод для получения всех продуктов
      *
      * @return список всех продуктов
      */
