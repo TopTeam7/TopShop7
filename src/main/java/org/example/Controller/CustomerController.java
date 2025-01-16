@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Scanner;
 
-/* Контроллер для управления покупателями.
+/** Контроллер для управления покупателями.
         */
 public class CustomerController {
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -19,7 +19,7 @@ public class CustomerController {
     private final Scanner scanner = new Scanner(System.in);
     private boolean cycleCustomerProgram = true;
 
-    /* Конструктор для создания CustomerController.
+    /** Конструктор для создания CustomerController.
             *
             * @param customerService сервис для работы с покупателями
      */
@@ -69,7 +69,6 @@ public class CustomerController {
         customers.forEach(System.out::println);
     }
 
-
     /**
      * Меню для поиска покупателя по ID.
      */
@@ -84,7 +83,6 @@ public class CustomerController {
             System.out.println("Ошибка: " + e.getMessage());
         }
     }
-
 
     /**
      * Меню для удаления покупателя по ID.

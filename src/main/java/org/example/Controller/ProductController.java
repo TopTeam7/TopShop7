@@ -117,6 +117,7 @@ public class ProductController {
 
     /**
      * Метод для отображения всех доступных товаров
+
      */
     private void getProduct() {
         String product = productService.getAll().toString(); // Получение всех продуктов

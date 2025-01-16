@@ -61,6 +61,7 @@ public class ProductRepository {
         return products; // Возврат списка продуктов
     }
 
+
     /**
      * Сохраняет список продуктов в файл.
      *
@@ -77,13 +78,12 @@ public class ProductRepository {
             log.warn("Ошибка при записи в файл: ", e);
         }
     }
-
-
     /**
      * Генерирует новый уникальный ID.
      *
      * @return новый ID.
      */
+
     public int generateNewId() {
         int lastId = 0; // Переменная для хранения последнего ID
         try (BufferedReader reader = new BufferedReader(new FileReader(idFilePath.toFile()))) {
@@ -105,12 +105,14 @@ public class ProductRepository {
         return lastId; // Возврат нового ID
     }
 
+
     /**
      * Сохраняет продукт в файл.
      *
      * @param product продукт для сохранения.
      * @return сохраненный продукт.
      */
+
     public Product save(Product product) {
         List<Product> products = loadProducts(); // Загрузка всех продуктов
         product.setId(generateNewId()); // Генерация нового ID для продукта
@@ -119,10 +121,12 @@ public class ProductRepository {
         return product; // Возврат сохраненного продукта
     }
 
+
     /**
      * Находит продукт по ID.
      *
      * @param id ID продукта.
+
      * @return найденный продукт.
      * @throws ProductNotFoundException если продукт не найден.
      */
@@ -136,7 +140,6 @@ public class ProductRepository {
 
     /**
      * Возвращает все продукты.
-     *
      * @return список всех продуктов.
      */
     public List<Product> findAll() {

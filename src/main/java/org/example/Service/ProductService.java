@@ -30,8 +30,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+
     /**
      * Метод для добавления нового продукта
+
      *
      * @param title    название продукта
      * @param price    цена продукта
@@ -43,6 +45,7 @@ public class ProductService {
         Product newProduct = new Product(null, title, price, category); // Создание нового продукта
         return productRepository.save(newProduct); // Сохранение продукта в репозитории
     }
+
 
     /**
      * Метод для получения всех продуктов

@@ -4,7 +4,6 @@ import org.example.Model.Order;
 import org.example.OrderException.OrderNotFoundExcetion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -77,7 +76,7 @@ public class OrderRepository {
      */
     public List<String> listOrder() {
         try {
-            log.info("получение листа заказов");
+            log.info("получение листа заказов{}", Files.readAllLines(filePath));
             return Files.readAllLines(filePath);
         } catch (IOException e) {
             log.warn("Не удалось получить лист заказов");
