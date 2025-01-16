@@ -23,8 +23,6 @@ class CustomerServiceTest {
     void setUp()throws IOException {
         String customerPath = "src/test/java/customers.txt";
         String customerPathId = "src/test/java/customers_id.txt";
-//        pathForTest = Path.of("src/test/java/customers.txt");
-//        Files.createFile(pathForTest);
         customerRepository = new CustomerRepository(customerPath, customerPathId);
         customerService = new CustomerService(customerRepository);
     }
