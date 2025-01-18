@@ -8,20 +8,23 @@ import org.example.exception.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-/** Контроллер для управления покупателями.
-        */
+/**
+ * Контроллер для управления покупателями.
+ */
 public class CustomerController {
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
     private final CustomerService customerService;
     private final Scanner scanner = new Scanner(System.in);
     private boolean cycleCustomerProgram = true;
 
-    /** Конструктор для создания CustomerController.
-            *
-            * @param customerService сервис для работы с покупателями
+    /**
+     * Конструктор для создания CustomerController.
+     *
+     * @param customerService сервис для работы с покупателями
      */
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -36,13 +39,37 @@ public class CustomerController {
     public void startCustomer(boolean cycleProgram) {
         cycleCustomerProgram = cycleProgram;
         while (cycleCustomerProgram) {
-
+            System.out.println("\"===== Управление покупателями =====\"");
+            System.out.println("1. Добавить покупателя");
+            System.out.println("2. Показать всех покупателей");
+            System.out.println("3. Найти покупателя по ID");
+            System.out.println("4. Удалить покупателя по ID");
+            System.out.println("5. Редактировать покупателя");
+            System.out.println("0. Вернуться в главное меню");
+            System.out.print("Выберите действие: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+try {
+    switch (choice) {
+        case 1 -> addCustomerMenu();
+        case 2 -> showAllCustomers();
+        case 3 -> findCustomerByIdMenu();
+        case 4 -> deleteCustomerMenu();
+        case 5 -> updateCustomerMenu();
+        case 0 -> back();
+        default -> System.out.println("Неверный выбор. Попробуйте снова.");
+    }
+}catch (InputMismatchException | IllegalStateException e){
+    scanner.close();
+    log.warn("Введите корректное значение");
+}
+        }
     }
 
     /**
      * Меню для добавления покупателя.
      */
-    private void addCustomerMenu() {
+     void addCustomerMenu() {
         System.out.print("Введите имя покупателя: ");
         String name = scanner.nextLine().trim();
         if (name.isEmpty()) {
@@ -50,14 +77,14 @@ public class CustomerController {
             return;
         }
 
-        System.out.print("Введите тип покупателя (NEW, REGULAR, VIP): ");
+        System.out.print("Введите тип покупателя (НОВЫЙ, ПОСТОЯННЫЙ, VIP): ");
         String type = scanner.nextLine().trim().toUpperCase();
         try {
             CustomerType customerType = CustomerType.valueOf(type);
             customerService.addCustomer(name, type);
             System.out.println("Покупатель добавлен.");
         } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка: Неверный тип покупателя. Допустимые значения: NEW, REGULAR, VIP.");
+            System.out.println("Ошибка: Неверный тип покупателя. Допустимые значения: НОВЫЙ, ПОСТОЯННЫЙ, VIP.");
         }
     }
 
@@ -72,7 +99,7 @@ public class CustomerController {
     /**
      * Меню для поиска покупателя по ID.
      */
-    private void findCustomerByIdMenu() {
+    void findCustomerByIdMenu() {
         System.out.print("Введите ID покупателя: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -84,10 +111,14 @@ public class CustomerController {
         }
     }
 
+
     /**
-     * Меню для удаления покупателя по ID.
+     * Меню для
+     * удаления покупателя
+     * по ID.
      */
-    private void deleteCustomerMenu() {
+
+    void deleteCustomerMenu() {
         System.out.print("Введите ID покупателя для удаления: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -100,9 +131,11 @@ public class CustomerController {
     }
 
     /**
-     * Меню для редактирования покупателя.
+     * Меню для
+     * редактирования покупателя.
      */
-    private void updateCustomerMenu() {
+
+    void updateCustomerMenu() {
         System.out.print("Введите ID покупателя для редактирования: ");
         int id = scanner.nextInt();
         scanner.nextLine();

@@ -1,13 +1,17 @@
+
 package org.example.Controller;
 
 
 import org.example.Model.OrderStatus;
 import org.example.OrderException.OrderNotFoundExcetion;
+import org.example.OrderException.ProductNotFoundException;
 import org.example.Service.CustomerService;
 import org.example.Service.OrderService;
 import org.example.Service.ProductService;
+import org.example.exception.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 public class OrderController {
@@ -48,9 +52,9 @@ public class OrderController {
                     case 0 -> back();
                     default -> System.out.println("Введите корректное число");
                 }
-            } catch (OrderNotFoundExcetion e) {
-                sc.close();
-                log.warn("Заказ с таким номером не найден");
+            } catch (OrderNotFoundExcetion | IllegalStateException e) {
+                sc.next();
+                log.warn("Заказ с таким номером не найден или введены не корректные данные");
                 System.out.println(e.getMessage());
             }
         }
@@ -60,15 +64,18 @@ public class OrderController {
      * Метод не ринимает параметры.
      * Метод создает новый заказ.
      */
-    public void addOrder() throws org.example.exception.CustomerNotFoundException {
+    public void addOrder()  {
+        try {
+            log.info("Добавление заказа");
 
-        log.info("Добавление заказа");
-
-        int customId = findCustomerById();
-        setOrderStatus();
-        String strProdId = addProductToOrder().toString();
-        String orderView = orderService.addOrder(customId, orderStatus, strProdId).toString();
-        log.info("Добавлен заказ {}", orderView);
+            int customId = findCustomerById();
+            setOrderStatus();
+            String strProdId = addProductToOrder().toString();
+            String orderView = orderService.addOrder(customId, orderStatus, strProdId).toString();
+            log.info("Добавлен заказ {}", orderView);
+        } catch (CustomerNotFoundException e) {
+            log.warn(e.getMessage());
+        }
 
     }
 
@@ -106,8 +113,8 @@ public class OrderController {
             case 4 -> newStatus = OrderStatus.CANCELED;
             default -> System.out.println("Введите корректный номер");
         }
-        log.info("Статус заказа изменен");
         orderService.changeStatusOrder(id, String.valueOf(newStatus));
+        log.info("Статус заказа изменен");
     }
 
     /**
@@ -116,11 +123,12 @@ public class OrderController {
      *
      * @return int
      */
-    public int findCustomerById() {
+    public int findCustomerById() throws CustomerNotFoundException {
         System.out.println("Введите ID покупателя");
         int customerId = sc.nextInt();
         String[] customId = customerService.findCustomerById(customerId).toString().split(";");
         return Integer.parseInt(customId[0]);
+
     }
 
     /**
@@ -135,21 +143,23 @@ public class OrderController {
         System.out.println(orderService.findOrderById(id));
     }
 
-    /**Метод находит продукт по ID.
-     *Метод возвращает Id  продукта
+    /**
+     * Метод находит продукт по ID.
+     * Метод возвращает Id  продукта
+     *
      * @return int
      */
-    public int findProductId() {
-        System.out.println("Введите ID продукта");
-        int productId = sc.nextInt();
-        String[] stringProductId = productService.getProduct(productId).toString().split(";");
-        return Integer.parseInt(stringProductId[0]);
+    public int findProductId() throws ProductNotFoundException {
+           System.out.println("Введите ID продукта");
+           int productId = sc.nextInt();
+           String[] stringProductId = productService.getProduct(productId).toString().split(";");
+           return Integer.parseInt(stringProductId[0]);
     }
 
     /**
      * Метод выбыра стстуса заказа
      * Метод ничего не возвращает
-      */
+     */
     public void setOrderStatus() {
         System.out.println("Введите статус заказа \n 1: New\n 2: Process\n 3: Completed\n 4: Canceled");
         int orderStatusValue = sc.nextInt();
@@ -168,13 +178,18 @@ public class OrderController {
 
     /**
      * Метод добавления ID продукта в заказ
+     *
      * @return StringBuilder.
      */
     public StringBuilder addProductToOrder() {
         int i = 0;
         int[] prodId = new int[10];
         do {
-            prodId[i] = findProductId();
+            try {
+                prodId[i] = findProductId();
+            }catch (ProductNotFoundException e){
+                log.warn(e.getMessage());
+            }
             System.out.println("Добавить еще продукт в заказ?");
             System.out.println("1: Да\n");
             System.out.println("0: Нет\n");
