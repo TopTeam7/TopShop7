@@ -1,3 +1,4 @@
+
 package org.example.Repository;
 
 import org.example.Model.Order;
@@ -130,7 +131,7 @@ public class OrderRepository {
             return orders.stream()
                     .filter(order -> order.getOrderId().equals(id))
                     .findFirst()
-                    .orElse(null);
+                    .orElseThrow(() -> new OrderNotFoundExcetion("Заказ с ID " + id + " не найден"));
         } catch (IOException | NullPointerException e) {
             log.warn("Не удалось выгрузить срисок заказов в лист");
             throw new RuntimeException(e);
@@ -139,7 +140,7 @@ public class OrderRepository {
 
     /**
      * Метод очищает файл от старых записей и записывает в файл обнавленные заказы
-      * Метод принимает лист заказов @ List<Order>
+     * Метод принимает лист заказов @ List<Order>
      *
      */
     public void loadToFileFromOrdersList(List<Order> orders) throws IOException {

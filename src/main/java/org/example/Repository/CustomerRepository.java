@@ -1,3 +1,6 @@
+
+
+
 package org.example.Repository;
 
 import org.example.Model.Customer;
@@ -18,14 +21,17 @@ public class CustomerRepository {
     private static final Logger log = LoggerFactory.getLogger(CustomerRepository.class);
     private final String CUSTOMERS_FILE;
     private final String LAST_ID_FILE;
-    public CustomerRepository(){
+
+
+    public CustomerRepository() {
         this.CUSTOMERS_FILE = "src/main/resources/customers.txt";
         this.LAST_ID_FILE = "src/main/resources/last_id.txt";
     }
-    public CustomerRepository(String path, String pathId){
+
+    public CustomerRepository(String path, String pathId) {
         this.CUSTOMERS_FILE = path;
         this.LAST_ID_FILE = pathId;
-        }
+    }
 
     /**
      * Загружает последний использованный ID из файла.

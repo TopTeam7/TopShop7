@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import org.example.OrderException.ProductNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +42,11 @@ public class MainController {
             System.out.println("3. Управление заказами");
             System.out.println("0. Выход из программы");
             System.out.println("Выберите действие:");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
             try {
+                int choice = scanner.nextInt();
+                //scanner.nextLine();
+
+
                 switch (choice) {
                     case 1 -> startCustomer();
                     case 2 -> startProduct();
@@ -53,40 +55,40 @@ public class MainController {
                     default -> log.info("Неверный выбор. Попробуйте снова.");
                 }
             } catch (RuntimeException e) {
-                log.error("Ошибка: ", e);
-                System.out.println("Произошла ошибка: " + e.getMessage());
+                log.error("Ошибка: вы ввели {}", e);
+
             }
         }
     }
+        /**
+         * Переходит в меню управления покупателями.
+         */
+        private void startCustomer () {
+            log.info("Начало управления покупателями");
+            customerController.startCustomer(cycleProgram);
+        }
 
-    /**
-     * Переходит в меню управления покупателями.
-     */
-    private void startCustomer() {
-        log.info("Начало управления покупателями");
-        customerController.startCustomer(cycleProgram);
-    }
+        /**
+         * Переходит в меню управления продуктами.
+         */
+        public void startProduct () {
+            log.info("Начало управления продуктом");
+            productController.startProduct(cycleProgram);
+        }
 
-    /**
-     * Переходит в меню управления продуктами.
-     */
-    public void startProduct() {
-        log.info("Начало управления продуктом");
-        productController.startProduct(cycleProgram);
-    }
-    /**
-     * Переходит в меню управления заказами.
-     */
-    private void startOrder() {
-        log.info("Начало управления заказами");
-        orderController.startOrder(cycleProgram);
-    }
+        /**
+         * Переходит в меню управления заказами.
+         */
+        private void startOrder () {
+            log.info("Начало управления заказами");
+            orderController.startOrder(cycleProgram);
+        }
 
-    /**
-     * Завершает работу программы.
-     */
-    private void closeController() {
-        log.info("Завершение работы программы");
-        cycleProgram = false;
+        /**
+         * Завершает работу программы.
+         */
+        private void closeController () {
+            log.info("Завершение работы программы");
+            cycleProgram = false;
+        }
     }
-}
