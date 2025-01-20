@@ -1,5 +1,4 @@
-
-package org.example.Controller;
+        package org.example.Controller;
 
 import org.example.Model.Customer;
 import org.example.Model.CustomerType;
@@ -11,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
 
 /**
  * Контроллер для управления покупателями.
@@ -26,20 +26,18 @@ public class CustomerController {
      *
      * @param customerService сервис для работы с покупателями
      */
+
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
 
-    /**
-     * Запускает меню управления покупателями.
-     *
-     * @param cycleProgram флаг для управления циклом программы
-     */
     public void startCustomer(boolean cycleProgram) {
         cycleCustomerProgram = cycleProgram;
         while (cycleCustomerProgram) {
+
             System.out.println("\"===== Управление покупателями =====\"");
+
             System.out.println("1. Добавить покупателя");
             System.out.println("2. Показать всех покупателей");
             System.out.println("3. Найти покупателя по ID");
@@ -49,6 +47,7 @@ public class CustomerController {
             System.out.print("Выберите действие: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
+
 try {
     switch (choice) {
         case 1 -> addCustomerMenu();
@@ -70,6 +69,7 @@ try {
      * Меню для добавления покупателя.
      */
      void addCustomerMenu() {
+
         System.out.print("Введите имя покупателя: ");
         String name = scanner.nextLine().trim();
         if (name.isEmpty()) {
@@ -88,10 +88,8 @@ try {
         }
     }
 
-    /**
-     * Показывает список всех покупателей.
-     */
-    private void showAllCustomers() {
+
+    void showAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
         customers.forEach(System.out::println);
     }
@@ -99,6 +97,7 @@ try {
     /**
      * Меню для поиска покупателя по ID.
      */
+
     void findCustomerByIdMenu() {
         System.out.print("Введите ID покупателя: ");
         int id = scanner.nextInt();
@@ -112,11 +111,13 @@ try {
     }
 
 
+
     /**
      * Меню для
      * удаления покупателя
      * по ID.
      */
+
 
     void deleteCustomerMenu() {
         System.out.print("Введите ID покупателя для удаления: ");
@@ -130,10 +131,12 @@ try {
         }
     }
 
+
     /**
      * Меню для
      * редактирования покупателя.
      */
+
 
     void updateCustomerMenu() {
         System.out.print("Введите ID покупателя для редактирования: ");

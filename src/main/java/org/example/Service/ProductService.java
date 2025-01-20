@@ -8,32 +8,26 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * Сервис для работы с продуктами.
+ */
 public class ProductService {
-    /**
-     * Логгер для логирования событий
-     */
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-    /**
-     * Репозиторий для работы с продуктами
-     */
 
     private final ProductRepository productRepository;
 
     /**
-     * Конструктор класса ProductService
+     * Конструктор для создания ProductService.
      *
-     * @param productRepository
+     * @param productRepository репозиторий для работы с продуктами
      */
-
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-
     /**
-     * Метод для добавления нового продукта
-
+     * Добавляет новый продукт.
      *
      * @param title    название продукта
      * @param price    цена продукта
@@ -46,9 +40,8 @@ public class ProductService {
         return productRepository.save(newProduct); // Сохранение продукта в репозитории
     }
 
-
     /**
-     * Метод для получения всех продуктов
+     * Возвращает список всех продуктов.
      *
      * @return список всех продуктов
      */
@@ -58,18 +51,14 @@ public class ProductService {
     }
 
     /**
-     * Метод для получения продукта по ID
+     * Находит продукт по ID.
      *
      * @param id ID продукта
      * @return найденный продукт
      * @throws ProductNotFoundException если продукт не найден
      */
-    public Product getProduct(int id) {
-        log.info("Получение продукта с помощью ID: {}", id);
-        Product product = productRepository.findById(id); // Получение продукта по ID из репозитория
-        if (product == null) {
-            throw new ProductNotFoundException("Продукт с ID " + id + " не найден");
-        }
-        return product;
+    public Product getProduct(int id) throws ProductNotFoundException {
+        log.info("Получение продукта по ID: {}", id);
+        return productRepository.findById(id); // Получение продукта по ID из репозитория
     }
 }
